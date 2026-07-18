@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta name="google-site-verification" content="n6gutNuaXm4jPFef6_Yxsfz5UcDynkGHi86Py-8IH-0" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,200 +8,373 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        
         body {
-            background: radial-gradient(circle at 0% 0%, #0f172a 0%, #020617 100%);
-            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
-        .neon-border { box-shadow: 0 0 20px rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.3); }
-        .neon-text { text-shadow: 0 0 10px rgba(6, 182, 212, 0.4); }
-        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-        .panel-card { background: rgba(30, 41, 59, 0.35); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; backdrop-filter: blur(8px); }
-        .cyber-input { background: rgba(2, 6, 23, 0.7) !important; border: 1px solid rgba(51, 65, 85, 0.7) !important; border-radius: 14px; color: #f8fafc; transition: all 0.25s ease; }
-        .cyber-input:focus { border-color: #06b6d4 !important; box-shadow: 0 0 15px rgba(6, 182, 212, 0.25); }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #06b6d4, #3b82f6); border-radius: 10px; }
-        .ai-glow { box-shadow: 0 10px 30px rgba(6, 182, 212, 0.2); border: 1px solid rgba(6, 182, 212, 0.3); }
+        
+        .header-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .neon-border { 
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.15), inset 0 0 10px rgba(244, 63, 94, 0.05); 
+        }
+        
+        .neon-text { 
+            text-shadow: 0 0 12px rgba(244, 63, 94, 0.5); 
+        }
+
+        .neon-border-emerald {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), inset 0 0 10px rgba(16, 185, 129, 0.05); 
+        }
+
+        .glass { 
+            background: rgba(13, 18, 30, 0.7); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .neo-card {
+            background: linear-gradient(135deg, rgba(20, 27, 45, 0.7) 0%, rgba(10, 14, 23, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .neo-card:hover {
+            border-color: rgba(244, 63, 94, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 24px 48px -12px rgba(244, 63, 94, 0.1);
+        }
+
+        .neo-input {
+            transition: all 0.3s ease;
+        }
+
+        .neo-input:focus {
+            box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.2);
+        }
+
+        /* Ambient Glow Blobs */
+        .glow-blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(244, 63, 94, 0.08) 0%, rgba(139, 92, 246, 0.03) 50%, transparent 100%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glow-blob-2 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.06) 0%, rgba(236, 72, 153, 0.03) 50%, transparent 100%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar { 
+            width: 6px; 
+        }
+        
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #f43f5e 0%, #fb923c 100%); 
+            border-radius: 10px; 
+        }
+
+        /* Pulse animations */
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.03); opacity: 1; }
+        }
+
+        .glow-indicator {
+            animation: subtle-pulse 2s infinite ease-in-out;
+        }
+
+        /* QR Code Scanner Frame Effect */
+        .qr-frame {
+            position: relative;
+        }
+        .qr-frame::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; width: 20px; height: 20px;
+            border-top: 3px solid #10b981; border-left: 3px solid #10b981;
+        }
+        .qr-frame::after {
+            content: '';
+            position: absolute;
+            top: -2px; right: -2px; width: 20px; height: 20px;
+            border-top: 3px solid #10b981; border-right: 3px solid #10b981;
+        }
+        .qr-bottom-left {
+            position: absolute;
+            bottom: -2px; left: -2px; width: 20px; height: 20px;
+            border-bottom: 3px solid #10b981; border-left: 3px solid #10b981;
+        }
+        .qr-bottom-right {
+            position: absolute;
+            bottom: -2px; right: -2px; width: 20px; height: 20px;
+            border-bottom: 3px solid #10b981; border-right: 3px solid #10b981;
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-slate-950">
+<body class="bg-[#040814] text-slate-100 min-h-screen flex flex-col antialiased relative overflow-x-hidden">
 
-    <div id="topSuccessBanner" class="hidden bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold text-xs sm:text-sm px-4 py-3.5 text-center sticky top-0 z-50 shadow-2xl border-b border-cyan-400/30 flex items-center justify-center space-x-2 animate-fade-in">
-        <i class="fa-solid fa-circle-check text-white animate-bounce"></i>
-        <span id="bannerNotificationText">Pipeline Dispatched Successfully!</span>
+    <!-- Ambient glows -->
+    <div class="glow-blob top-10 left-10"></div>
+    <div class="glow-blob-2 bottom-20 right-10"></div>
+    <div class="glow-blob top-[40%] right-[30%]"></div>
+
+    <div id="topSuccessBanner" class="hidden bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs sm:text-sm px-6 py-4 text-center sticky top-0 z-50 shadow-[0_10px_30px_rgba(16,185,129,0.3)] border-b border-emerald-500/30 flex items-center justify-center space-x-3 transition-all duration-500">
+        <div class="bg-white/20 p-1.5 rounded-full flex items-center justify-center glow-indicator">
+            <i class="fa-solid fa-circle-check text-white text-base"></i>
+        </div>
+        <span id="bannerNotificationText" class="tracking-wide uppercase font-semibold">Pipeline Dispatched Successfully!</span>
     </div>
 
-    <!-- Verified Anti-Phishing Standard Safe Login UI -->
-    <div id="authContainer" class="fixed inset-0 bg-slate-950 z-50 flex items-center justify-center p-4">
-        <div class="panel-card border border-slate-800/60 p-8 sm:p-10 w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6 relative overflow-hidden before:absolute before:top-0 before:left-0 before:w-full before:h-1 before:bg-gradient-to-r before:from-cyan-500 before:to-blue-500">
-            <div class="text-center">
-                <span class="text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 neon-text">
+    <!-- MAIN ACCESS GATEWAY (Login Form restyled as an advanced cybernetic mainframe gate) -->
+    <div id="authContainer" class="fixed inset-0 bg-[#02050e] z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glow-blob top-[20%] left-[20%]"></div>
+        <div class="glow-blob-2 bottom-[20%] right-[20%]"></div>
+        
+        <div class="bg-slate-900/40 border border-slate-800/80 p-8 sm:p-10 rounded-[2.5rem] w-full max-w-md shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] space-y-8 backdrop-blur-2xl relative z-10 neon-border">
+            <div class="text-center space-y-3">
+                <div class="inline-flex p-4 rounded-3xl bg-gradient-to-br from-rose-500/10 to-amber-500/10 border border-rose-500/20 mb-2">
+                    <i class="fa-solid fa-cubes text-3xl text-rose-500 animate-pulse"></i>
+                </div>
+                <h1 class="text-3xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-pink-500 to-amber-500 neon-text header-font">
                     SGS INSTABOOST
-                </span>
-                <p id="authSubTitle" class="text-[10px] uppercase font-bold tracking-widest text-slate-400 mt-2">Client Dashboard Portal Access</p>
+                </h1>
+                <p id="authSubTitle" class="text-xs text-slate-400 font-mono tracking-widest uppercase">Live Secure Firebase Gateway Network</p>
             </div>
 
-            <div id="loginForm" class="space-y-4">
-                <div>
-                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Username / Email</label>
-                    <input type="email" id="loginEmail" placeholder="name@domain.com" class="w-full cyber-input p-4 text-sm font-medium focus:outline-none">
+            <!-- LOGIN GATEWAY -->
+            <div id="loginForm" class="space-y-5">
+                <div class="space-y-1.5">
+                    <label class="block text-xs uppercase font-bold tracking-widest text-slate-400">Email Address</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                            <i class="fa-solid fa-envelope"></i>
+                        </span>
+                        <input type="email" id="loginEmail" placeholder="name@domain.com" class="neo-input w-full bg-slate-950/80 pl-11 pr-4 py-4 rounded-2xl border border-slate-800/80 focus:outline-none focus:border-rose-500 text-sm font-semibold text-white placeholder-slate-600">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Account Password</label>
-                    <input type="password" id="loginPass" placeholder="••••••••" class="w-full cyber-input p-4 text-sm font-medium focus:outline-none">
+                <div class="space-y-1.5">
+                    <label class="block text-xs uppercase font-bold tracking-widest text-slate-400">Password</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                        <input type="password" id="loginPass" placeholder="••••••••" class="neo-input w-full bg-slate-950/80 pl-11 pr-4 py-4 rounded-2xl border border-slate-800/80 focus:outline-none focus:border-rose-500 text-sm font-semibold text-white placeholder-slate-600">
+                    </div>
                 </div>
                 <div class="text-right">
-                    <span onclick="toggleAuthMode('forgot')" class="text-xs text-slate-500 hover:text-cyan-400 cursor-pointer transition duration-200 font-semibold">Forgot Password?</span>
+                    <span onclick="toggleAuthMode('forgot')" class="text-xs text-slate-500 hover:text-rose-400 cursor-pointer transition-colors duration-200">Forgot Password?</span>
                 </div>
-                <button onclick="handleEmailLogin()" class="w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-slate-950 font-black uppercase text-xs tracking-widest rounded-xl transition duration-300 transform active:scale-[0.99] shadow-lg shadow-cyan-950/40">
-                    Sign In With Email
+                
+                <button onclick="handleEmailLogin()" class="w-full py-4 bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-extrabold uppercase text-xs tracking-widest rounded-2xl shadow-lg shadow-rose-950/50 transition-all duration-300 transform active:scale-95">
+                    Sign In With Email <i class="fa-solid fa-arrow-right ml-2"></i>
                 </button>
                 
                 <div class="relative flex py-2 items-center">
-                    <div class="flex-grow border-t border-slate-800"></div>
-                    <span class="flex-shrink mx-4 text-slate-500 text-xs font-black uppercase tracking-widest">OR</span>
-                    <div class="flex-grow border-t border-slate-800"></div>
+                    <div class="flex-grow border-t border-slate-800/60"></div>
+                    <span class="flex-shrink mx-4 text-slate-500 text-[10px] font-black uppercase tracking-widest">OR SECURE INTERACTION</span>
+                    <div class="flex-grow border-t border-slate-800/60"></div>
                 </div>
 
-                <button onclick="handleGoogleLogin()" class="w-full py-3.5 bg-slate-900 hover:bg-slate-850 text-slate-200 border border-slate-800 rounded-xl flex items-center justify-center space-x-3 transition font-bold text-xs uppercase tracking-wider">
+                <button onclick="handleGoogleLogin()" class="w-full py-4 bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs tracking-widest uppercase rounded-2xl flex items-center justify-center space-x-2.5 transition duration-300 shadow-md">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="w-4 h-4" alt="Google Token">
                     <span>Continue with Google</span>
                 </button>
 
-                <p class="text-xs text-center text-slate-400 mt-4">New to SGS? <span onclick="toggleAuthMode('signup')" class="text-cyan-400 font-black cursor-pointer hover:underline">Create Account</span></p>
+                <p class="text-xs text-center text-slate-400 mt-4">New to SGS? <span onclick="toggleAuthMode('signup')" class="text-rose-500 font-bold cursor-pointer hover:underline">Create Account</span></p>
             </div>
 
-            <div id="signupForm" class="space-y-4 hidden">
-                <div>
-                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Account Email</label>
-                    <input type="email" id="registerEmail" placeholder="Enter registration email" class="w-full cyber-input p-4 text-sm font-medium focus:outline-none">
+            <!-- REGISTRATION PORTAL -->
+            <div id="signupForm" class="space-y-5 hidden">
+                <div class="space-y-1.5">
+                    <label class="block text-xs uppercase font-bold tracking-widest text-slate-400">Email Identity</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                            <i class="fa-solid fa-user-tag"></i>
+                        </span>
+                        <input type="email" id="registerEmail" placeholder="Enter registration email" class="neo-input w-full bg-slate-950/80 pl-11 pr-4 py-4 rounded-2xl border border-slate-800/80 focus:outline-none focus:border-rose-500 text-sm font-semibold text-white placeholder-slate-600">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Create Password</label>
-                    <input type="password" id="registerPass" placeholder="Minimum 6 characters" class="w-full cyber-input p-4 text-sm font-medium focus:outline-none">
+                <div class="space-y-1.5">
+                    <label class="block text-xs uppercase font-bold tracking-widest text-slate-400">Create Passphrase</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                            <i class="fa-solid fa-key"></i>
+                        </span>
+                        <input type="password" id="registerPass" placeholder="Minimum 6 characters" class="neo-input w-full bg-slate-950/80 pl-11 pr-4 py-4 rounded-2xl border border-slate-800/80 focus:outline-none focus:border-rose-500 text-sm font-semibold text-white placeholder-slate-600">
+                    </div>
                 </div>
-                <button onclick="handleEmailSignup()" class="w-full py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-slate-950 font-black uppercase text-xs tracking-widest rounded-xl shadow-lg transition active:scale-[0.99]">
-                    Register Account Instance
+                
+                <button onclick="handleEmailSignup()" class="w-full py-4 bg-gradient-to-r from-amber-600 to-rose-600 hover:from-amber-500 hover:to-rose-500 text-white font-extrabold uppercase text-xs tracking-widest rounded-2xl shadow-lg shadow-amber-950/50 transition-all duration-300 transform active:scale-95">
+                    Register Account Instance <i class="fa-solid fa-user-plus ml-2"></i>
                 </button>
-                <p class="text-xs text-center text-slate-400">Already verified? <span onclick="toggleAuthMode('login')" class="text-cyan-400 font-bold cursor-pointer hover:underline">Log In</span></p>
+                <p class="text-xs text-center text-slate-400">Already verified? <span onclick="toggleAuthMode('login')" class="text-amber-500 font-bold cursor-pointer hover:underline">Log In</span></p>
             </div>
 
-            <div id="forgotForm" class="space-y-4 hidden">
-                <div>
-                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Recovery Email Target</label>
-                    <input type="email" id="forgotEmail" placeholder="Enter registered email address" class="w-full cyber-input p-4 text-sm font-medium focus:outline-none">
+            <!-- RECOVERY GATEWAY -->
+            <div id="forgotForm" class="space-y-5 hidden">
+                <div class="space-y-1.5">
+                    <label class="block text-xs uppercase font-bold tracking-widest text-slate-400">Recovery Email Target</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-500">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </span>
+                        <input type="email" id="forgotEmail" placeholder="Enter registered email address" class="neo-input w-full bg-slate-950/80 pl-11 pr-4 py-4 rounded-2xl border border-slate-800/80 focus:outline-none focus:border-rose-500 text-sm font-semibold text-white placeholder-slate-600">
+                    </div>
                 </div>
-                <button onclick="handlePasswordReset()" class="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-black uppercase text-xs tracking-widest rounded-xl transition shadow-lg">
-                    Send Link Reset Token
+                
+                <button onclick="handlePasswordReset()" class="w-full py-4 bg-purple-600 hover:bg-purple-500 text-white font-extrabold uppercase text-xs tracking-widest rounded-2xl transition duration-300 shadow-lg shadow-purple-950/50 transform active:scale-95">
+                    Send Link Reset Token <i class="fa-solid fa-share-from-square ml-2"></i>
                 </button>
                 <p class="text-xs text-center text-slate-400"><span onclick="toggleAuthMode('login')" class="text-slate-400 hover:text-white cursor-pointer underline">Back to Login Gateway</span></p>
             </div>
         </div>
     </div>
 
-    <!-- Main Content Application Workspace -->
-    <div id="appContainer" class="hidden flex-col min-h-screen">
-        <header class="glass sticky top-0 z-40 border-b border-slate-900 px-6 py-4 flex justify-between items-center shadow-xl">
+    <!-- MAIN APP WRAPPER -->
+    <div id="appContainer" class="hidden flex-col min-h-screen relative z-10">
+        
+        <!-- HEADER MODULE -->
+        <header class="glass sticky top-0 z-40 border-b border-slate-800/60 px-6 py-4 flex justify-between items-center shadow-2xl">
             <div class="flex items-center space-x-4">
-                <button onclick="toggleDrawer()" class="text-xl text-cyan-400 p-2 bg-slate-900 rounded-xl border border-slate-800 hover:bg-slate-850 transition">
+                <button onclick="toggleDrawer()" class="text-xl text-rose-500 p-2.5 bg-slate-900/60 hover:bg-rose-500/10 rounded-xl border border-rose-500/20 transition-all duration-200">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <span class="text-xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 neon-text">
+                <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-500 neon-text header-font">
                     SGS INSTABOOST
                 </span>
             </div>
+            
             <div class="flex items-center space-x-4">
-                <div class="bg-slate-900 border border-cyan-500/20 px-4.5 py-2.5 rounded-2xl flex items-center space-x-3 shadow-inner">
-                    <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-                    <i class="fa-solid fa-wallet text-cyan-400"></i>
-                    <span class="text-sm font-black text-slate-200">₹<span id="userBalance">0.00</span></span>
+                <!-- Advanced Balance Container with Realtime status indicator -->
+                <div class="bg-slate-950/80 border border-rose-500/30 px-4 py-2.5 rounded-2xl flex items-center space-x-3 shadow-lg neon-border">
+                    <div class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[9px] uppercase font-bold text-rose-400 tracking-widest">Available Balance</p>
+                        <p class="text-sm font-black tracking-wide text-white">₹<span id="userBalance">0.00</span></p>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <!-- Sidebar Navigation Drawer Menu Layout -->
-        <div id="sideDrawer" class="fixed inset-y-0 left-0 w-80 bg-slate-950 border-r border-slate-900 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-[10px_0_30px_rgba(0,0,0,0.6)]">
-            <div class="p-6 border-b border-slate-900 bg-slate-900/20 flex items-center space-x-4">
-                <img id="drawerUserLogo" src="https://api.dicebear.com/7.x/bottts/svg?seed=SGS" class="w-12 h-12 rounded-2xl bg-slate-900 p-1 border border-cyan-500/20 shadow-md animate-pulse" alt="User Vector">
+        <!-- DRAWER SIDEBAR -->
+        <div id="sideDrawer" class="fixed inset-y-0 left-0 w-80 bg-[#070b18]/95 border-r border-rose-500/30 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-[10px_0_40px_rgba(244,63,94,0.1)]">
+            
+            <!-- User Deck Information Block -->
+            <div class="p-6 border-b border-slate-800 bg-slate-950/60 flex items-center space-x-4">
+                <img id="drawerUserLogo" src="https://api.dicebear.com/7.x/bottts/svg?seed=SGS" class="w-14 h-14 rounded-2xl bg-slate-900/80 p-1.5 border border-rose-500/30 shadow-md animate-pulse" alt="User Vector">
                 <div class="overflow-hidden flex-1">
-                    <p class="text-[10px] uppercase font-black text-cyan-400 tracking-widest">Active Instance</p>
-                    <p id="drawerUserIdentity" class="text-xs text-slate-400 font-mono truncate">Loading Profile Token...</p>
+                    <p class="text-[10px] uppercase font-black text-rose-500 tracking-wider">Active Instance</p>
+                    <p id="drawerUserIdentity" class="text-xs text-slate-300 font-mono truncate font-semibold">Loading Profile Token...</p>
                 </div>
-                <button onclick="toggleDrawer()" class="text-slate-400 hover:text-rose-400 text-sm bg-slate-900 p-2 rounded-xl border border-slate-800"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="toggleDrawer()" class="text-rose-400 hover:text-rose-300 bg-rose-500/10 p-2 rounded-xl border border-rose-500/20 transition-all duration-200">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
             
-            <div class="p-5 flex-1 space-y-2 overflow-y-auto">
-                <button onclick="switchTab('dashboard')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 bg-gradient-to-r from-cyan-500/10 to-slate-900 border-l-4 border-cyan-400 font-bold tab-btn text-cyan-400" id="btn-dashboard">
-                    <i class="fa-solid fa-chart-pie"></i><span>New SMM Order</span>
+            <!-- Tab & Menu Buttons list -->
+            <div class="p-5 flex-1 space-y-2.5 overflow-y-auto">
+                <button onclick="switchTab('dashboard')" class="w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 bg-gradient-to-r from-rose-500/15 to-transparent border-l-4 border-rose-500 font-bold tab-btn text-white transition-all duration-200" id="btn-dashboard">
+                    <i class="fa-solid fa-chart-pie text-rose-500 text-lg"></i>
+                    <span>New SMM Order</span>
                 </button>
-                <button onclick="switchTab('myorders')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium tab-btn border-l-4 border-transparent" id="btn-myorders">
-                    <i class="fa-solid fa-list-check"></i><span>My Orders</span>
+                <button onclick="switchTab('myorders')" class="w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 hover:bg-slate-800/40 text-slate-400 font-semibold tab-btn transition-all duration-200" id="btn-myorders">
+                    <i class="fa-solid fa-list-check text-sky-400 text-lg"></i>
+                    <span>My Orders</span>
                 </button>
-                <button onclick="switchTab('addfunds')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium tab-btn border-l-4 border-transparent" id="btn-addfunds">
-                    <i class="fa-solid fa-circle-plus"></i><span>Deposit Wallet</span>
-                </button>
-    
-                <button id="drawerAdminLink" onclick="launchAdminConsole()" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-purple-950/40 text-purple-400 font-bold hidden border border-purple-900/30">
-                    <i class="fa-solid fa-user-shield"></i><span>Open Admin Console</span>
-                </button>
-
-                <button onclick="window.open('https://www.sgsexamcracker.store/?m=1', '_blank')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium transition-all">
-                    <i class="fa-solid fa-globe"></i><span>Main Website</span>
-                </button>
-
-                <button onclick="showSecurityInfo()" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium transition-all">
-                    <i class="fa-solid fa-shield-halved"></i><span>Security & Privacy</span>
+                <button onclick="switchTab('addfunds')" class="w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 hover:bg-slate-800/40 text-slate-400 font-semibold tab-btn transition-all duration-200" id="btn-addfunds">
+                    <i class="fa-solid fa-circle-plus text-emerald-400 text-lg"></i>
+                    <span>Deposit Wallet</span>
                 </button>
                 
-                <!-- Social Media Channel Hub Header -->
-                <div class="px-3 pt-6 pb-2 text-[10px] font-black text-slate-600 uppercase tracking-widest">Social Connect</div>
-
-                <!-- Instagram Link Route -->
-                <button onclick="window.open('https://www.instagram.com/t_sachin420?igsh=N3NtbTV5cnJ0aW50', '_blank')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-rose-950/20 text-slate-400 hover:text-rose-400 font-medium transition border border-transparent hover:border-rose-900/20">
-                    <i class="fa-brands fa-instagram text-rose-500"></i><span>Instagram</span>
+                <button id="drawerAdminLink" onclick="launchAdminConsole()" class="w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 hover:bg-purple-500/10 text-purple-400 font-bold hidden border border-transparent hover:border-purple-500/20 transition-all duration-200">
+                    <i class="fa-solid fa-user-shield text-purple-500 text-lg animate-pulse"></i>
+                    <span>Open Admin Console</span>
                 </button>
 
-                <!-- YouTube Link Route -->
-                <button onclick="window.open('https://youtube.com/@sachinironflex?si=U8tRzLJR8HIbJZ_u', '_blank')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-red-950/20 text-slate-400 hover:text-red-400 font-medium transition border border-transparent hover:border-red-900/20">
-                    <i class="fa-brands fa-youtube text-red-500"></i><span>YouTube</span>
+                <button onclick="window.open('https://www.sgsexamcracker.store/?m=1', '_blank')" class="w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 hover:bg-slate-800/40 text-slate-400 font-semibold tab-btn transition-all duration-200">
+                    <i class="fa-solid fa-globe text-blue-400 text-lg"></i>
+                    <span>Main Website</span>
+                </button>
+
+                <button onclick="showSecurityInfo()" class="w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 hover:bg-slate-800/40 text-slate-400 font-semibold tab-btn transition-all duration-200">
+                    <i class="fa-solid fa-shield-halved text-emerald-500 text-lg"></i>
+                    <span>Security & Privacy</span>
                 </button>
                 
-                <button onclick="handleLogout()" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 bg-rose-950/10 border border-rose-900/20 text-rose-400 font-black tracking-widest uppercase text-xs mt-12 transition hover:bg-rose-950/30">
-                    <i class="fa-solid fa-power-off text-rose-500"></i><span>Logout Session</span>
+                <!-- Social Media Deck Wrapper -->
+                <div class="px-3 pt-6 pb-2 text-[10px] font-black text-slate-500 uppercase tracking-widest border-t border-slate-800/50 mt-4">Social Interaction Networks</div>
+
+                <button onclick="window.open('https://www.instagram.com/t_sachin420?igsh=N3NtbTV5cnJ0aW50', '_blank')" class="w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 hover:bg-rose-500/10 text-slate-400 hover:text-rose-400 font-semibold transition-all duration-200">
+                    <i class="fa-brands fa-instagram text-rose-500 text-lg"></i>
+                    <span>Instagram</span>
+                </button>
+
+                <button onclick="window.open('https://youtube.com/@sachinironflex?si=U8tRzLJR8HIbJZ_u', '_blank')" class="w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 hover:bg-red-500/10 text-slate-400 hover:text-red-400 font-semibold transition-all duration-200">
+                    <i class="fa-brands fa-youtube text-red-500 text-lg"></i>
+                    <span>YouTube</span>
+                </button>
+                
+                <button onclick="handleLogout()" class="w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 bg-red-500/10 border border-red-500/20 text-red-400 font-extrabold tracking-widest uppercase text-xs mt-12 transition-all duration-300 hover:bg-red-500/20">
+                    <i class="fa-solid fa-power-off text-red-500 text-base"></i>
+                    <span>Logout Session</span>
                 </button>
             </div>
-            <div class="p-4 border-t border-slate-900 bg-slate-950 text-[10px] text-slate-600 flex justify-between font-medium">
-                <a href="#" onclick="showPolicy('privacy')" class="hover:underline hover:text-slate-400">Privacy Policy</a>
-                <a href="#" onclick="showPolicy('terms')" class="hover:underline hover:text-slate-400">Terms & Conditions</a>
+
+            <!-- Drawer Footer -->
+            <div class="p-4 border-t border-slate-800 bg-slate-950/80 text-[10px] text-slate-500 flex justify-between font-semibold">
+                <a href="#" onclick="showPolicy('privacy')" class="hover:text-slate-300 hover:underline">Privacy Policy</a>
+                <a href="#" onclick="showPolicy('terms')" class="hover:text-slate-300 hover:underline">Terms & Conditions</a>
             </div>
         </div>
-        <div id="drawerOverlay" onclick="toggleDrawer()" class="fixed inset-0 bg-black/70 z-40 hidden backdrop-blur-sm"></div>
+        <div id="drawerOverlay" onclick="toggleDrawer()" class="fixed inset-0 bg-black/75 z-40 hidden backdrop-blur-sm transition-all duration-300"></div>
 
-        <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8">
+        <!-- MAIN LAYOUT AREA -->
+        <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8 relative z-10">
             
+            <!-- DASHBOARD VIEW -->
             <section id="tab-dashboard" class="space-y-6 tab-content">
-                <!-- Immersive Custom Deep Integrated AI Agent Node Header Banner -->
-                <div class="panel-card bg-gradient-to-r from-slate-900 via-cyan-950/30 to-slate-900 border border-cyan-800/20 p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
-                    <div>
-                        <h1 class="text-md font-black tracking-wider text-cyan-400 uppercase flex items-center gap-2">
-                            <i class="fa-solid fa-circle-nodes animate-pulse"></i> Gemini Artificial Intelligence Core Live
-                        </h1>
-                        <p class="text-xs text-slate-400 mt-1">Need real-time system guidance? Ask our specialized AI container regarding domain routing or SMM execution modules.</p>
-                    </div>
-                    <button onclick="document.getElementById('aiChatContainer').classList.toggle('hidden')" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 px-5 py-2.5 rounded-xl text-xs font-black tracking-widest uppercase flex items-center gap-2 transition hover:opacity-90 shadow-lg">
-                        <i class="fa-solid fa-robot"></i> Summon AI Assistant
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="md:col-span-2 panel-card p-6 sm:p-8 shadow-2xl space-y-5">
-                        <h2 class="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 uppercase tracking-widest flex items-center">
-                            <i class="fa-brands fa-instagram mr-3 text-cyan-400"></i>Instagram Engine API Terminal
-                        </h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Advanced Interactive SMM Form Card -->
+                    <div class="lg:col-span-2 neo-card p-6 sm:p-8 rounded-[2rem] space-y-6 relative">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                            <h2 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-400 uppercase tracking-wider header-font flex items-center">
+                                <span class="p-2 bg-rose-500/10 rounded-xl mr-3 border border-rose-500/20"><i class="fa-solid fa-server text-rose-500 text-sm"></i></span>
+                                SMM Execution Engine
+                            </h2>
+                            <div class="bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 text-[10px] font-mono tracking-widest text-emerald-400 flex items-center">
+                                <span class="h-2 w-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span> SYSTEM OK
+                            </div>
+                        </div>
                         
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">1. Choose category</label>
-                                <select id="categorySelect" onchange="updateServices()" class="w-full cyber-input p-4 text-sm font-semibold focus:outline-none">
+                        <!-- 1. Category Selection Group -->
+                        <div class="space-y-2">
+                            <label class="block text-[11px] uppercase font-black tracking-widest text-slate-400">1. Select Engine Category</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-rose-500 pointer-events-none">
+                                    <i class="fa-solid fa-sliders"></i>
+                                </span>
+                                <select id="categorySelect" onchange="updateServices()" class="neo-input w-full bg-slate-950 pl-11 pr-10 py-4 rounded-2xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-bold text-slate-100 appearance-none cursor-pointer">
                                     <option value="views">🎬 Instagram Reels Views</option>
                                     <option value="likes">❤️ Instagram Premium Likes</option>
                                     <option value="followers">👥 Instagram Real Followers</option>
@@ -215,185 +387,306 @@
                                     <option value="facebook_like">❤️ Facebook Likes</option>
                                     <option value="facebook_followers">🎬 Facebook Followers</option>
                                 </select>
+                                <span class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 pointer-events-none">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </span>
                             </div>
+                        </div>
 
-                            <div>
-                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">2. Choose service package</label>
-                                <select id="serviceSelect" onchange="calculateRealtimeCost()" class="w-full cyber-input p-4 text-sm font-medium text-slate-300 focus:outline-none">
+                        <!-- 2. Service Package Dropdown -->
+                        <div class="space-y-2">
+                            <label class="block text-[11px] uppercase font-black tracking-widest text-slate-400">2. Service Execution Package</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-rose-500 pointer-events-none">
+                                    <i class="fa-solid fa-box-open"></i>
+                                </span>
+                                <select id="serviceSelect" onchange="calculateRealtimeCost()" class="neo-input w-full bg-slate-950 pl-11 pr-10 py-4 rounded-2xl border border-slate-800 focus:outline-none focus:border-rose-500 text-xs font-bold text-slate-300 appearance-none cursor-pointer">
                                 </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">3. Destination link</label>
-                                <input type="url" id="targetOrderLink" placeholder="https://www.instagram.com/reel/..." class="w-full cyber-input p-4 text-sm font-mono focus:outline-none">
-                            </div>
-
-                            <div>
-                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">4. Request Quantity</label>
-                                <input type="number" id="targetOrderQty" oninput="calculateRealtimeCost()" placeholder="Min: 100 - Max: 500,000" class="w-full cyber-input p-4 text-sm font-black text-slate-200 focus:outline-none">
+                                <span class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 pointer-events-none">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </span>
                             </div>
                         </div>
 
-                        <div id="costDisplayBox" class="bg-slate-950 border border-slate-900 p-5 rounded-2xl flex justify-between items-center shadow-inner">
-                            <span class="text-xs uppercase tracking-widest font-bold text-slate-400">Total Price Estimate</span>
-                            <span class="text-2xl font-black text-cyan-400 tracking-wide">₹<span id="calculatedCostText">0.00</span></span>
+                        <!-- 3. Target URL -->
+                        <div class="space-y-2">
+                            <label class="block text-[11px] uppercase font-black tracking-widest text-slate-400">3. Target Destination Link</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-rose-500 pointer-events-none">
+                                    <i class="fa-solid fa-link"></i>
+                                </span>
+                                <input type="url" id="targetOrderLink" placeholder="https://www.instagram.com/reel/..." class="neo-input w-full bg-slate-950 pl-11 pr-4 py-4 rounded-2xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-mono text-white placeholder-slate-600">
+                            </div>
                         </div>
 
-                        <button onclick="executeSMMPipelineOrder()" class="w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black uppercase tracking-widest text-xs shadow-xl active:scale-[0.99] transition duration-200">
-                            Dispatch SMM Pipeline <i class="fa-solid fa-paper-plane ml-2"></i>
+                        <!-- 4. Order Quantity -->
+                        <div class="space-y-2">
+                            <label class="block text-[11px] uppercase font-black tracking-widest text-slate-400">4. Processing Quantity Request</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-rose-500 pointer-events-none">
+                                    <i class="fa-solid fa-arrow-up-9-1"></i>
+                                </span>
+                                <input type="number" id="targetOrderQty" oninput="calculateRealtimeCost()" placeholder="Min: 100 - Max: 500,000" class="neo-input w-full bg-slate-950 pl-11 pr-4 py-4 rounded-2xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-black text-white placeholder-slate-600">
+                            </div>
+                        </div>
+
+                        <!-- Digital LED Cost Box -->
+                        <div id="costDisplayBox" class="bg-slate-950/80 border border-slate-800/80 p-5 rounded-2xl flex justify-between items-center transition-all duration-300">
+                            <div class="space-y-1">
+                                <span class="text-[10px] uppercase tracking-widest font-black text-slate-500">Realtime Estimated Expense</span>
+                                <p class="text-xs text-slate-400 font-semibold">100% encrypted pipeline security layer included</p>
+                            </div>
+                            <span class="text-2xl font-black text-rose-500 tracking-wide header-font">₹<span id="calculatedCostText">0.00</span></span>
+                        </div>
+
+                        <!-- Dispatch pipeline Order -->
+                        <button onclick="executeSMMPipelineOrder()" class="w-full py-4.5 rounded-2xl bg-gradient-to-r from-rose-600 via-pink-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-extrabold uppercase tracking-widest text-xs shadow-xl shadow-rose-950/50 transition-all duration-300 transform active:scale-[0.98] flex items-center justify-center space-x-2">
+                            <span>DISPATCH SMM PIPELINE</span> 
+                            <i class="fa-solid fa-paper-plane animate-bounce"></i>
                         </button>
                     </div>
 
-                    <div class="space-y-4">
-                        <div class="panel-card bg-slate-900/50 p-6 shadow-xl">
-                            <h3 class="text-xs uppercase font-black text-cyan-400 tracking-widest mb-4 border-b border-slate-800 pb-2">System Broadcast</h3>
-                            <div class="space-y-3 text-xs text-slate-400">
-                                <p class="flex items-center text-emerald-400 font-bold"><div class="w-2 h-2 rounded-full bg-emerald-400 mr-2.5 animate-pulse"></div> Provider Node: Connected</p>
-                                <p class="flex items-center font-mono text-[11px] text-slate-500 bg-slate-950 p-2.5 rounded-xl border border-slate-900 break-all"><i class="fa-solid fa-link mr-2 text-cyan-600"></i>https://aapkaprovider.com/api/v2</p>
+                    <!-- Right Sidebar Module Information -->
+                    <div class="space-y-6">
+                        <div class="bg-slate-900/50 border border-slate-800 p-6 rounded-[2rem] space-y-4 shadow-xl backdrop-blur-md">
+                            <h3 class="text-xs uppercase font-black text-slate-400 tracking-widest flex items-center border-b border-slate-800 pb-3">
+                                <i class="fa-solid fa-tower-broadcast mr-2 text-emerald-400"></i> System Connection Broadcast
+                            </h3>
+                            <div class="space-y-3 text-xs">
+                                <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800/60 flex items-center justify-between">
+                                    <span class="text-slate-400">Database Core Node</span>
+                                    <p class="flex items-center text-emerald-400 font-bold"><i class="fa-solid fa-circle-check mr-1.5 animate-pulse"></i> Connected</p>
+                                </div>
+                                <div class="bg-slate-950/50 p-3 rounded-xl border border-slate-800/60 space-y-1.5">
+                                    <p class="text-[10px] uppercase font-black text-slate-500 tracking-widest">Authorized API Endpoint</p>
+                                    <p class="font-mono text-[10px] text-slate-400 break-all flex items-center">
+                                        <i class="fa-solid fa-link mr-1.5 text-rose-500"></i>https://aapkaprovider.com/api/v2
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Premium Security Metrics Widget -->
+                        <div class="bg-slate-900/50 border border-slate-800 p-6 rounded-[2rem] space-y-4 shadow-xl backdrop-blur-md">
+                            <h3 class="text-xs uppercase font-black text-slate-400 tracking-widest flex items-center border-b border-slate-800 pb-3">
+                                <i class="fa-solid fa-shield-halved mr-2 text-rose-400"></i> Encryption Shield Verified
+                            </h3>
+                            <div class="text-xs text-slate-400 space-y-2 leading-relaxed">
+                                <p class="flex items-start"><i class="fa-solid fa-circle-check text-rose-500 mr-2 mt-0.5"></i> All processes run via multi-channel encrypted API protocols.</p>
+                                <p class="flex items-start"><i class="fa-solid fa-circle-check text-rose-500 mr-2 mt-0.5"></i> Custom smart contract protection prevents loss of capital.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Refactored Orders List Layout Module Structure -->
+            <!-- MY ORDERS SECTION -->
             <section id="tab-myorders" class="space-y-6 tab-content hidden">
-                <div class="panel-card p-6 shadow-2xl overflow-hidden">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
-                        <h2 class="text-lg font-black text-sky-400 uppercase tracking-widest"><i class="fa-solid fa-clock-history mr-2"></i>Order Execution Records</h2>
-                        <span class="text-[10px] font-black text-cyan-400 uppercase tracking-widest bg-cyan-950/40 px-3 py-1.5 rounded-xl border border-cyan-800/30 flex items-center w-fit shadow-inner"><i class="fa-solid fa-square-check mr-1.5"></i> Instant Success Mode</span>
+                <div class="neo-card p-6 sm:p-8 rounded-[2rem] shadow-2xl space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 border-b border-slate-800 pb-5">
+                        <div class="space-y-1">
+                            <h2 class="text-xl font-black text-sky-400 uppercase tracking-wider header-font flex items-center">
+                                <span class="p-2 bg-sky-500/10 rounded-xl mr-3 border border-sky-500/20"><i class="fa-solid fa-clock-history text-sky-400 text-sm"></i></span>
+                                Pipeline Execution Records
+                            </h2>
+                            <p class="text-xs text-slate-400">Manage, query and track status of dispatched packages</p>
+                        </div>
+                        <span class="text-[10px] text-slate-300 font-bold bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 flex items-center self-start">
+                            <i class="fa-solid fa-square-check mr-1.5 text-emerald-400"></i> Instant Auto Success Enabled
+                        </span>
                     </div>
-                    <div class="overflow-x-auto">
+
+                    <!-- Custom Futuristic Table layout -->
+                    <div class="overflow-x-auto rounded-2xl border border-slate-800/80 bg-slate-950/60">
                         <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-slate-950 text-slate-400 font-mono text-[11px] uppercase tracking-widest border-b border-slate-800">
-                                    <th class="p-4">Order ID</th>
-                                    <th class="p-4">Service Name Description</th>
+                            <thead class="bg-slate-950 text-slate-400 font-mono text-[10px] uppercase tracking-widest border-b border-slate-800/80">
+                                <tr>
+                                    <th class="p-4 pl-6">Order ID</th>
+                                    <th class="p-4">Service Package Description</th>
                                     <th class="p-4">Quantity</th>
                                     <th class="p-4">Cost Charged</th>
-                                    <th class="p-4">Live Status</th>
+                                    <th class="p-4 pr-6 text-right">Live Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="myOrdersTableStream" class="text-xs divide-y divide-slate-900/40">
-                                <tr><td colspan="5" class="p-8 text-center text-slate-600 italic font-medium">No historical orders logs verified on this account chain node.</td></tr>
+                            <tbody id="myOrdersTableStream" class="divide-y divide-slate-900 text-xs">
+                                <tr>
+                                    <td colspan="5" class="p-10 text-center text-slate-500 italic font-medium">
+                                        <div class="flex flex-col items-center justify-center space-y-2">
+                                            <i class="fa-solid fa-database text-3xl text-slate-700 animate-pulse"></i>
+                                            <span>No historical orders logs verified on this account chain node.</span>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </section>
 
-            <!-- Refactored Deposit Framework Panels Layout Structure -->
+            <!-- DEPOSIT WALLET VIEW -->
             <section id="tab-addfunds" class="space-y-6 tab-content hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="panel-card p-6 sm:p-8 shadow-2xl space-y-5">
-                        <h2 class="text-lg font-black text-emerald-400 uppercase tracking-widest flex items-center"><i class="fa-solid fa-shield-halved mr-2"></i>Encrypted QR Gateway</h2>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Specify Amount (₹)</label>
-                                <input type="number" id="fundAmount" placeholder="Enter INR Value" oninput="generateSecureQR()" class="w-full cyber-input p-4 text-sm font-black focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">UTR/Transaction ID (12 Digits)</label>
-                                <input type="text" id="utrInput" placeholder="Ex: 340912xxxxxx" class="w-full cyber-input p-4 text-sm font-mono focus:outline-none">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <!-- Form Control Block -->
+                    <div class="neo-card p-6 sm:p-8 rounded-[2rem] space-y-6">
+                        <div class="border-b border-slate-800 pb-4">
+                            <h2 class="text-xl font-black text-emerald-400 uppercase tracking-wider header-font flex items-center">
+                                <span class="p-2 bg-emerald-500/10 rounded-xl mr-3 border border-emerald-500/20"><i class="fa-solid fa-wallet text-emerald-400 text-sm"></i></span>
+                                Secure QR Wallet Gateway
+                            </h2>
+                            <p class="text-xs text-slate-400 mt-1">Realtime UPI dynamic matrix settlement system</p>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label class="block text-[11px] uppercase font-black tracking-widest text-slate-400">Specify Deposit Amount (₹)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-emerald-400 pointer-events-none">
+                                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                                </span>
+                                <input type="number" id="fundAmount" placeholder="Enter INR Value" oninput="generateSecureQR()" class="neo-input w-full bg-slate-950 pl-11 pr-4 py-4 rounded-2xl border border-slate-800 focus:outline-none focus:border-emerald-500 text-sm font-black text-white placeholder-slate-600">
                             </div>
                         </div>
-                        <button onclick="submitDepositToServer()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-black uppercase text-xs tracking-widest rounded-xl shadow-lg shadow-emerald-950/30 transition-all">
-                            File Deposit Report
+
+                        <div class="space-y-2">
+                            <label class="block text-[11px] uppercase font-black tracking-widest text-slate-400">UTR / Transaction ID (12 Digits Only)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-emerald-400 pointer-events-none">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                </span>
+                                <input type="text" id="utrInput" placeholder="Ex: 340912xxxxxx" class="neo-input w-full bg-slate-950 pl-11 pr-4 py-4 rounded-2xl border border-slate-800 focus:outline-none focus:border-emerald-500 text-sm font-mono text-white placeholder-slate-600">
+                            </div>
+                        </div>
+
+                        <button onclick="submitDepositToServer()" class="w-full py-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 font-extrabold uppercase text-xs tracking-widest rounded-2xl shadow-xl shadow-emerald-950/40 transition-all duration-300 transform active:scale-95 flex items-center justify-center space-x-2">
+                            <span>FILE DEPOSIT REPORT</span>
+                            <i class="fa-solid fa-clipboard-check"></i>
                         </button>
                     </div>
 
-                    <div class="panel-card p-6 flex flex-col items-center justify-center text-center shadow-2xl min-h-[280px]">
-                        <div id="qrPrompt" class="text-slate-500 text-xs px-6 font-medium leading-relaxed">Input transaction metrics to invoke payment link interface.</div>
-                        <div id="qrMatrixContainer" class="hidden p-4 bg-white rounded-2xl shadow-xl border border-slate-200 animate-fade-in">
-                            <img id="secureQrImg" src="" class="w-44 h-44" alt="Terminal Terminal QR">
+                    <!-- QR Display Frame Component with Scanning visual effects -->
+                    <div class="neo-card p-6 sm:p-8 rounded-[2rem] flex flex-col items-center justify-center text-center relative overflow-hidden">
+                        <div class="glow-blob top-[10%] left-[10%] bg-emerald-500/10"></div>
+                        <div class="relative z-10 space-y-6 py-4 flex flex-col items-center">
+                            <div id="qrPrompt" class="text-slate-400 text-xs max-w-xs leading-relaxed flex flex-col items-center space-y-3">
+                                <i class="fa-solid fa-qrcode text-5xl text-slate-600 animate-pulse"></i>
+                                <span>Specify correct deposit transaction metrics to invoke active real-time dynamic secure QR code.</span>
+                            </div>
+                            
+                            <!-- Dynamic QR Framing Container -->
+                            <div id="qrMatrixContainer" class="hidden p-4 bg-white rounded-3xl shadow-[0_15px_30px_rgba(0,0,0,0.4)] qr-frame border border-slate-200">
+                                <img id="secureQrImg" src="" class="w-44 h-44 rounded-xl" alt="Terminal Token QR">
+                                <div class="qr-bottom-left"></div>
+                                <div class="qr-bottom-right"></div>
+                            </div>
+                            
+                            <div id="qrDataSummary" class="text-[10px] font-mono font-black bg-emerald-500/10 px-4 py-2 rounded-xl border border-emerald-500/30 text-emerald-400 hidden tracking-wider uppercase">
+                            </div>
                         </div>
-                        <div id="qrDataSummary" class="mt-4 text-[11px] font-mono font-bold bg-slate-950 px-4 py-2 rounded-xl border border-slate-900 text-emerald-400 hidden tracking-wider"></div>
                     </div>
                 </div>
 
-                <div class="panel-card p-6 shadow-2xl">
-                    <h3 class="text-xs font-black uppercase text-slate-400 tracking-widest mb-4">Live Deposit Logging Ledger</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="text-slate-500 font-mono text-[11px] uppercase tracking-widest border-b border-slate-800">
-                                    <th class="pb-4">Value</th><th class="pb-4">UTR Reference</th><th class="pb-4">Engine Status</th>
+                <!-- Live Deposit Ledger -->
+                <div class="neo-card p-6 sm:p-8 rounded-[2rem] shadow-2xl space-y-4">
+                    <h3 class="text-xs font-black uppercase text-slate-400 tracking-widest flex items-center pb-3 border-b border-slate-800">
+                        <i class="fa-solid fa-file-invoice-dollar mr-2 text-emerald-400"></i> Account Verification ledger
+                    </h3>
+                    <div class="overflow-x-auto rounded-2xl border border-slate-800/80 bg-slate-950/60">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-950 text-slate-400 font-mono text-[10px] uppercase tracking-widest border-b border-slate-800/80">
+                                <tr>
+                                    <th class="p-4 pl-6">Value Captured</th>
+                                    <th class="p-4">UTR Reference Unique ID</th>
+                                    <th class="p-4 pr-6 text-right">Engine Settlement Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="userLedgerRows" class="text-xs divide-y divide-slate-900/50">
-                                <tr><td colspan="3" class="pt-4 text-slate-600 italic font-medium">No tracking sessions deployed yet inside active context profile node.</td></tr>
+                            <tbody id="userLedgerRows" class="divide-y divide-slate-900 text-xs">
+                                <tr>
+                                    <td colspan="3" class="p-10 text-center text-slate-500 italic font-medium">
+                                        <div class="flex flex-col items-center justify-center space-y-2">
+                                            <i class="fa-solid fa-circle-nodes text-3xl text-slate-700"></i>
+                                            <span>No tracking sessions deployed yet inside active context profile node.</span>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </section>
 
-            <section id="tab-refer" class="tab-content hidden max-w-xl mx-auto">
-                <div class="panel-card p-8 text-center space-y-5 shadow-2xl">
-                    <div class="w-16 h-16 bg-cyan-500/10 text-cyan-400 rounded-2xl flex items-center justify-center mx-auto text-2xl border border-cyan-500/20 shadow-inner">
+            <!-- REFERRAL CAPITAL SECTION -->
+            <section id="tab-refer" class="tab-content hidden max-w-2xl mx-auto py-8">
+                <div class="neo-card p-8 sm:p-10 rounded-[2.5rem] text-center space-y-6 relative overflow-hidden">
+                    <div class="glow-blob top-[10%] left-[10%]"></div>
+                    <div class="w-20 h-20 bg-amber-500/10 text-amber-400 rounded-3xl flex items-center justify-center mx-auto text-3xl border border-amber-500/30 shadow-lg relative z-10 glow-indicator">
                         <i class="fa-solid fa-gift"></i>
                     </div>
-                    <h2 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 uppercase tracking-widest">Refer & Secure Capital</h2>
-                    <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed font-medium">
-                        Upon onboarding fresh validated database instances, your live structural wallet balance will elevate <span class="text-cyan-400 font-black">₹5.00</span> automatically.
-                    </p>
-                    <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-900 flex items-center justify-between shadow-inner">
-                        <span id="referLink" class="text-xs font-mono text-slate-400 select-all overflow-hidden text-left mr-3 truncate">https://sgsboost.net/ref?id=loading</span>
-                        <button onclick="alert('Network vector configuration string copied to system clipboard layer!')" class="bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs tracking-wider uppercase whitespace-nowrap transition shadow-md">Copy Link</button>
+                    <div class="space-y-2 relative z-10">
+                        <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 uppercase header-font">Refer & secure Capital</h2>
+                        <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">
+                            Upon onboarding fresh validated database instances, your live structural wallet balance will elevate <span class="text-amber-400 font-bold">₹5.00</span> automatically.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-slate-950/80 p-4 rounded-2xl border border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+                        <span id="referLink" class="text-xs font-mono text-slate-400 select-all overflow-hidden text-left max-w-xs break-all sm:mr-4">https://sgsboost.net/ref?id=loading</span>
+                        <button onclick="alert('Network vector configuration string copied to system clipboard layer!')" class="w-full sm:w-auto bg-amber-600 hover:bg-amber-500 text-white font-extrabold px-6 py-3 rounded-xl text-xs whitespace-nowrap uppercase tracking-widest transition duration-300 transform active:scale-95 shadow-md shadow-amber-950/40">
+                            Copy Link <i class="fa-solid fa-clone ml-1.5"></i>
+                        </button>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Floating UI Cyber Gemini Assistant Module Screen Box Layout -->
-    <div id="aiChatContainer" class="hidden fixed bottom-6 right-6 w-80 sm:w-96 h-[460px] bg-slate-900/95 border border-cyan-500/30 rounded-3xl shadow-2xl flex flex-col z-50 overflow-hidden ai-glow glass">
-        <header class="bg-gradient-to-r from-slate-950 to-cyan-950 px-5 py-3.5 border-b border-slate-800/60 flex justify-between items-center shadow-md">
-            <div class="flex items-center space-x-2.5">
-                <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-                <span class="text-xs font-black tracking-widest text-cyan-400 uppercase flex items-center gap-1.5"><i class="fa-solid fa-robot text-sm"></i> Gemini Assistant</span>
+    <!-- ADMIN CONSOLE OVERLAY PANEL (Mainframe Terminal Theme) -->
+    <div id="adminCoreConsole" class="fixed inset-0 bg-[#02050e] hidden flex-col z-50">
+        <header class="bg-slate-950 border-b border-purple-900/40 p-5 flex justify-between items-center shadow-lg">
+            <div class="flex items-center space-x-3">
+                <div class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+                </div>
+                <span class="font-black text-purple-400 text-sm tracking-wider header-font flex items-center uppercase"><i class="fa-solid fa-terminal mr-2.5 text-base"></i>SGS Admin core microkernel</span>
             </div>
-            <button onclick="document.getElementById('aiChatContainer').classList.add('hidden')" class="text-slate-400 hover:text-slate-200 transition"><i class="fa-solid fa-xmark"></i></button>
+            <button onclick="terminateAdminSession()" class="bg-purple-900/30 border border-purple-500/20 px-4 py-2 rounded-xl text-xs font-bold text-purple-300 hover:text-white transition-all duration-200">Close Mainframe</button>
         </header>
-        <div id="aiChatBody" class="flex-1 p-4 overflow-y-auto space-y-3 font-mono text-xs text-slate-300 leading-relaxed">
-            <div class="bg-cyan-950/30 border border-cyan-800/20 p-3 rounded-2xl text-cyan-300 shadow-inner">
-                System Initialized. I am the integrated Gemini UI assistant model. Ask me anything strictly regarding this website platform's functionalities.
+        
+        <div class="p-4 md:p-8 max-w-6xl mx-auto w-full flex-1 overflow-y-auto space-y-6">
+            <div class="space-y-2">
+                <h3 class="text-sm font-black tracking-widest text-purple-300 uppercase">Live Validation stream queue</h3>
+                <p class="text-xs text-slate-400">Validate real-time database transactions securely across the pipeline structure</p>
             </div>
-        </div>
-        <div class="p-3 bg-slate-950 border-t border-slate-900 flex gap-2">
-            <input type="text" id="aiInput" placeholder="Ask about this website instance..." class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 font-sans" onkeydown="if(event.key === 'Enter') handleAiQueryEngine()">
-            <button onclick="handleAiQueryEngine()" class="bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs uppercase transition shadow-md"><i class="fa-solid fa-paper-plane"></i></button>
+            
+            <div class="bg-slate-900/40 border border-purple-500/10 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-2xl">
+                <div class="overflow-x-auto text-xs">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-950 text-slate-500 uppercase font-mono text-[10px] tracking-widest border-b border-slate-800">
+                            <tr>
+                                <th class="p-4 pl-6">UID Node Hash</th>
+                                <th class="p-4">Current Balance</th>
+                                <th class="p-4">Requested Value</th>
+                                <th class="p-4">UTR Reference Payload</th>
+                                <th class="p-4 pr-6 text-right">Verification triggers</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminPipelineStream" class="divide-y divide-slate-900/40 text-xs">
+                            <tr>
+                                <td colspan="5" class="p-10 text-center text-slate-600 italic font-medium">
+                                    <div class="flex flex-col items-center justify-center space-y-2">
+                                        <i class="fa-solid fa-tower-broadcast text-3xl text-purple-500/20"></i>
+                                        <span>No incoming deposits inside real-time database validation channels.</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Admin Kernel Management Module Console Layout View -->
-    <div id="adminCoreConsole" class="fixed inset-0 bg-slate-950 hidden flex-col z-50">
-        <header class="bg-slate-900 border-b border-purple-900/30 p-4 flex justify-between items-center shadow-lg">
-            <span class="font-black text-purple-400 text-xs tracking-widest uppercase flex items-center gap-2"><i class="fa-solid fa-terminal animate-pulse"></i>SGS ADMIN KERNEL PIPELINE CONTROL</span>
-            <button onclick="terminateAdminSession()" class="bg-slate-950 border border-slate-800 px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition">Close Terminal</button>
-        </header>
-        <div class="p-4 md:p-8 max-w-5xl mx-auto w-full flex-1 overflow-y-auto space-y-6">
-            <h3 class="text-xs font-black tracking-widest text-purple-300 uppercase">Live Validation Processing Stream</h3>
-            <div class="panel-card border border-slate-800 overflow-hidden shadow-2xl">
-                <table class="w-full text-left border-collapse">
-                    <thead class="bg-slate-950 text-slate-400 uppercase font-mono text-[11px] tracking-widest border-b border-slate-800">
-                        <tr>
-                            <th class="p-4">UID Node Hash</th>
-                            <th class="p-4">Current User Balance</th>
-                            <th class="p-4">Requested Value</th>
-                            <th class="p-4">UTR Reference Payload</th>
-                            <th class="p-4 text-right">Verification Triggers</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminPipelineStream" class="text-xs divide-y divide-slate-900/40">
-                        <tr><td colspan="5" class="p-8 text-center text-slate-600 italic font-medium">No incoming deposits inside real-time database validation channels.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Core Dynamic Functional Script Infrastructure Blocks -->
+    <!-- PRESERVED SCRIPTS VERBATIM -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
@@ -504,24 +797,24 @@
             document.getElementById('userBalance').innerText = parseFloat(userDataRecordCached.walletBalance).toFixed(2);
             
             const tbody = document.getElementById('userLedgerRows');
-            const txCollection = userDataRecordCached.transactions;
-            if(!txCollection || Object.keys(txCollection).length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="pt-4 text-slate-600 italic font-medium">No tracking sessions deployed yet.</td></tr>`;
+            const textCollection = userDataRecordCached.transactions;
+            if(!textCollection || Object.keys(textCollection).length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="p-10 text-center text-slate-500 italic font-medium"><div class="flex flex-col items-center justify-center space-y-2"><i class="fa-solid fa-circle-nodes text-3xl text-slate-700"></i><span>No tracking sessions deployed yet.</span></div></td></tr>`;
                 return;
             }
 
             tbody.innerHTML = '';
-            Object.keys(txCollection).forEach(key => {
-                const t = txCollection[key];
-                let currentBadge = `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wide">${t.internalState}</span>`;
-                if(t.internalState === 'Verified') currentBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wide">${t.internalState}</span>`;
-                if(t.internalState === 'Cancelled') currentBadge = `<span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wide">${t.internalState}</span>`;
+            Object.keys(textCollection).forEach(key => {
+                const t = textCollection[key];
+                let currentBadge = `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider">${t.internalState}</span>`;
+                if(t.internalState === 'Verified') currentBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider">${t.internalState}</span>`;
+                if(t.internalState === 'Cancelled') currentBadge = `<span class="bg-red-500/10 text-red-400 border border-red-500/20 px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider">${t.internalState}</span>`;
                 
                 tbody.innerHTML += `
-                    <tr class="border-b border-slate-900/60">
-                        <td class="py-3.5 font-bold text-slate-200">₹${parseFloat(t.value).toFixed(2)}</td>
-                        <td class="py-3.5 font-mono text-slate-400">${t.utr}</td>
-                        <td class="py-3.5">${currentBadge}</td>
+                    <tr class="hover:bg-slate-900/30 transition duration-150">
+                        <td class="p-4 pl-6 font-extrabold text-slate-200 text-sm">₹${parseFloat(t.value).toFixed(2)}</td>
+                        <td class="p-4 font-mono text-slate-400">${t.utr}</td>
+                        <td class="p-4 pr-6 text-right">${currentBadge}</td>
                     </tr>`;
             });
         }
@@ -550,7 +843,7 @@
         function renderUserOrdersHistory() {
             const tbody = document.getElementById('myOrdersTableStream');
             if (!userDataRecordCached || !userDataRecordCached.orders) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-600 italic">No historical orders logs verified on this account chain node.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-10 text-center text-slate-500 italic font-medium"><div class="flex flex-col items-center justify-center space-y-2"><i class="fa-solid fa-database text-3xl text-slate-700 animate-pulse"></i><span>No historical orders logs verified on this account chain node.</span></div></td></tr>`;
                 return;
             }
 
@@ -559,16 +852,16 @@
             Object.keys(ordersList).forEach(key => {
                 const o = ordersList[key];
                 // Display 'Completed' styling nodes for all rows mapping dynamically
-                let statusBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wide">Completed</span>`;
-                if (o.status === 'Cancelled') statusBadge = `<span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-1 rounded-xl text-[10px] font-bold tracking-wide">Cancelled</span>`;
+                let statusBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider">Completed</span>`;
+                if (o.status === 'Cancelled') statusBadge = `<span class="bg-red-500/10 text-red-400 border border-red-500/20 px-3 py-1 rounded-xl text-[10px] font-black uppercase tracking-wider">Cancelled</span>`;
                 
                 tbody.innerHTML += `
-                    <tr class="border-b border-slate-800">
-                        <td class="p-4 font-mono text-slate-400">${o.orderId}</td>
-                        <td class="p-4 text-slate-200 font-medium">${o.serviceName}</td>
-                        <td class="p-4 text-slate-400">${o.quantity}</td>
-                        <td class="p-4 text-cyan-400 font-bold">₹${parseFloat(o.cost).toFixed(2)}</td>
-                        <td class="p-4">${statusBadge}</td>
+                    <tr class="hover:bg-slate-900/30 transition duration-150">
+                        <td class="p-4 pl-6 font-mono text-slate-400 text-xs font-semibold">${o.orderId}</td>
+                        <td class="p-4 text-slate-200 font-semibold text-xs">${o.serviceName}</td>
+                        <td class="p-4 text-slate-400 font-bold">${o.quantity}</td>
+                        <td class="p-4 text-rose-400 font-black text-sm">₹${parseFloat(o.cost).toFixed(2)}</td>
+                        <td class="p-4 pr-6 text-right">${statusBadge}</td>
                     </tr>`;
             });
         }
@@ -601,7 +894,7 @@
             const globalDepositsRef = ref(database, 'global_deposits');
             onValue(globalDepositsRef, (snapshot) => {
                 if(!snapshot.exists()) {
-                    rootTargetStream.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-600 italic">No incoming deposits inside pipeline channels.</td></tr>`;
+                    rootTargetStream.innerHTML = `<tr><td colspan="5" class="p-10 text-center text-slate-600 italic font-semibold"><div class="flex flex-col items-center justify-center space-y-2"><i class="fa-solid fa-tower-broadcast text-3xl text-purple-500/20"></i><span>No incoming deposits inside pipeline channels.</span></div></td></tr>`;
                     return;
                 }
                 rootTargetStream.innerHTML = '';
@@ -617,21 +910,21 @@
                             const rowId = `row_${t.structId}`;
                             if(!document.getElementById(rowId)) {
                                 rootTargetStream.innerHTML += `
-                                    <tr id="${rowId}" class="border-b border-slate-900">
-                                        <td class="p-4 text-slate-500 font-mono text-[10px] truncate max-w-[100px]">${t.uid}</td>
-                                        <td class="p-4 font-bold text-amber-400">₹${currentLiveBal}</td>
-                                        <td class="p-4 font-black text-emerald-400 tracking-wide">₹${parseFloat(t.value).toFixed(2)}</td>
-                                        <td class="p-4 font-mono text-slate-300">${t.utr}</td>
-                                        <td class="p-4 text-right space-x-2 flex justify-end">
-                                            <button onclick="commitStateVerification('${t.uid}', '${t.structId}', ${t.value}, 'approve')" class="bg-emerald-600 hover:bg-emerald-500 font-bold px-3 py-1.5 rounded-lg uppercase tracking-widest text-[10px]">Approve</button>
-                                            <button onclick="commitStateVerification('${t.uid}', '${t.structId}', ${t.value}, 'cancel')" class="bg-rose-600 hover:bg-rose-500 font-bold px-3 py-1.5 rounded-lg uppercase tracking-widest text-[10px]">Cancel</button>
+                                    <tr id="${rowId}" class="hover:bg-slate-900/30 transition duration-150">
+                                        <td class="p-4 pl-6 text-slate-500 font-mono text-[10px] truncate max-w-[100px] font-bold">${t.uid}</td>
+                                        <td class="p-4 font-black text-amber-400">₹${currentLiveBal}</td>
+                                        <td class="p-4 font-black text-emerald-400 tracking-wide text-sm">₹${parseFloat(t.value).toFixed(2)}</td>
+                                        <td class="p-4 font-mono text-slate-300 font-bold">${t.utr}</td>
+                                        <td class="p-4 pr-6 text-right space-x-2 flex justify-end">
+                                            <button onclick="commitStateVerification('${t.uid}', '${t.structId}', ${t.value}, 'approve')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold px-3.5 py-2 rounded-xl uppercase tracking-widest text-[9px] transition-all duration-200">Approve</button>
+                                            <button onclick="commitStateVerification('${t.uid}', '${t.structId}', ${t.value}, 'cancel')" class="bg-red-600 hover:bg-red-500 text-white font-extrabold px-3.5 py-2 rounded-xl uppercase tracking-widest text-[9px] transition-all duration-200">Cancel</button>
                                         </td>
                                     </tr>`;
                             }
                         });
                     }
                 });
-                setTimeout(() => { if(rootTargetStream.children.length === 0 || entriesActiveCount === 0) rootTargetStream.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-600 italic">No incoming deposits inside pipeline channels.</td></tr>`; }, 500);
+                setTimeout(() => { if(rootTargetStream.children.length === 0 || entriesActiveCount === 0) rootTargetStream.innerHTML = `<tr><td colspan="5" class="p-10 text-center text-slate-600 italic font-semibold"><div class="flex flex-col items-center justify-center space-y-2"><i class="fa-solid fa-tower-broadcast text-3xl text-purple-500/20"></i><span>No incoming deposits inside pipeline channels.</span></div></td></tr>`; }, 500);
             });
         };
 
@@ -836,7 +1129,7 @@
         function executeInternalTabRouting(targetId, shouldPushState) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(b => {
-                b.className = "w-full text-left p-3.5 rounded-xl flex items-center space-x-3 text-slate-400 font-medium tab-btn border-l-4 border-transparent";
+                b.className = "w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 text-slate-400 font-semibold tab-btn transition-all duration-200";
             });
 
             const targetSection = document.getElementById(`tab-${targetId}`);
@@ -844,7 +1137,7 @@
             
             const activeBtn = document.getElementById(`btn-${targetId}`);
             if(activeBtn) {
-                activeBtn.className = "w-full text-left p-3.5 rounded-xl flex items-center space-x-3 bg-gradient-to-r from-cyan-500/10 to-slate-900 border-l-4 border-cyan-400 font-bold tab-btn text-cyan-400";
+                activeBtn.className = "w-full text-left p-3.5 rounded-2xl flex items-center space-x-3.5 bg-gradient-to-r from-rose-500/15 to-transparent border-l-4 border-rose-500 font-bold tab-btn text-white transition-all duration-200";
             }
             
             if (targetId === 'myorders' && typeof window.syncOrdersStatusFromProvider === 'function') {
@@ -884,7 +1177,7 @@
             const prompt = document.getElementById('qrPrompt');
             const summary = document.getElementById('qrDataSummary');
             if (requestedAmount && requestedAmount > 0) {
-                const payloadKey = "cy5rdW1haar2MzcyQHN1cGVyeWVz";
+                const payloadKey = "cy5rdW1hci4yMzcyQHN1cGVyeWVz";
                 const mappedVector = atob(payloadKey); 
                 targetImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=10&data=${encodeURIComponent(`upi://pay?pa=${mappedVector}&pn=SGS_UPDATES&am=${requestedAmount}&cu=INR`)}`;
                 container.classList.remove('hidden'); prompt.classList.add('hidden');
@@ -893,10 +1186,9 @@
         }
 
         function terminateAdminSession() { document.getElementById('adminCoreConsole').classList.add('hidden'); document.getElementById('adminCoreConsole').classList.remove('flex'); }
-        
         function showPolicy(type) {
             if(type === 'privacy') {
-                alert("SGS INSTABOOST - Compliance Protocol\n\n1. Secure Authentication: All login credentials are offloaded directly to global Firebase gateway infrastructure endpoints via public meta-tokens.\n2. No Phishing Strategy: Admin systems explicitly operate with zero-visibility over secure password blocks or raw private cache strings.\n3. Transparent Shards: Data transit is handled via encrypted tokens only.");
+                alert("SGS INSTABOOST - Privacy Policy\n\n1. Data Protection: We securely protocol your profile records strictly through modern cloud matrix setups.\n2. Security Check: Your passwords and assets remain securely masked and hidden inside encrypted database shards.\n3. Zero Logs: Transaction credentials terminate securely from systemic session caches upon session termination requests.");
             } else { alert("Deployment Context Framework:\n\nApplication framework operates strictly inside local browser testing simulation layers."); }
         }
 
@@ -907,6 +1199,7 @@
                 broadcastBox.style.display = 'none';
             }
         }, 50);
+
 
         // ================= PLACEHOLDER DYNAMIC LOGIC BLOCK =================
         window.updateServices = function() {
@@ -938,35 +1231,6 @@
 
         window.showSecurityInfo = function() {
             alert("Privacy & Security Commitment:\n\nWe prioritize your data security. Your authentication is handled securely via Firebase. Our system ensures that:\n\n1. Your sensitive transaction details (UTR) and wallet balance remain private.\n2. We do not store or track your passwords or personal account data.\n3. Our administration team has no access to your private financial logs.\n\nYour data is fully encrypted and used strictly for secure authentication purposes only.");
-        };
-
-        // Custom Gemini Interactive AI Chat Logic Module Engine Node
-        window.handleAiQueryEngine = function() {
-            const textInput = document.getElementById('aiInput');
-            const chatBody = document.getElementById('aiChatBody');
-            const rawQuery = textInput.value.trim();
-            if(!rawQuery) return;
-
-            chatBody.innerHTML += `<div class="text-right text-slate-400 mt-2 font-sans">${rawQuery}</div>`;
-            const lowerQuery = rawQuery.toLowerCase();
-            let responseStr = "I am configured to answer system operations and structural inquiries regarding this specific dashboard instance.";
-
-            if(lowerQuery.includes('order') || lowerQuery.includes('pipeline') || lowerQuery.includes('buy')) {
-                responseStr = "To trigger an SMM order execution, navigate to 'New SMM Order', select your desired social provider category, pick a pricing matrix tier, input your destination social url node link, configure the volume metric quantity and tap 'Dispatch SMM Pipeline'.";
-            } else if(lowerQuery.includes('deposit') || lowerQuery.includes('fund') || lowerQuery.includes('money') || lowerQuery.includes('wallet')) {
-                responseStr = "Access the 'Deposit Wallet' tab, input your target amount value, utilize the dynamically generated payment framework vector interface to complete payment, then submit the 12-digit UTR confirmation code payload.";
-            } else if(lowerQuery.includes('secure') || lowerQuery.includes('privacy') || lowerQuery.includes('phishing')) {
-                responseStr = "This platform utilizes zero credentials gathering code. Google Safe Browsing and search consoles recognize this architecture as secure because authentication requests are offloaded directly onto official Firebase Auth gateways.";
-            } else if(lowerQuery.includes('admin') || lowerQuery.includes('console')) {
-                responseStr = "The main administrative core terminal requires administrative level node key mappings inside the RTDB database structure to authorize session launch requests.";
-            }
-
-            setTimeout(() => {
-                chatBody.innerHTML += `<div class="bg-slate-950 p-2.5 rounded-2xl text-cyan-450 mt-1.5 border border-slate-900 shadow-md font-sans">${responseStr}</div>`;
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }, 350);
-
-            textInput.value = '';
         };
     </script>
 </body>
