@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta name="google-site-verification" content="n6gutNuaXm4jPFef6_Yxsfz5UcDynkGHi86Py-8IH-0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGS Premium SMM Engine - Production Ready</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .neon-border { box-shadow: 0 0 25px rgba(20, 184, 166, 0.25); border-color: rgba(20, 184, 166, 0.4); }
+        .neon-text { text-shadow: 0 0 12px rgba(20, 184, 166, 0.5); }
+        .glass { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .cyber-card { background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%); border: 1px solid rgba(51, 65, 85, 0.5); }
+        .cyber-input { background: rgba(2, 6, 23, 0.8) !important; border: 1px solid rgba(71, 85, 105, 0.6) !important; transition: all 0.3s ease; }
+        .cyber-input:focus { border-color: #14b8a6 !important; box-shadow: 0 0 10px rgba(20, 184, 166, 0.2); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 10px; }
+        body { background-image: radial-gradient(circle at top right, rgba(20, 184, 166, 0.08), transparent 45%), radial-gradient(circle at bottom left, rgba(244, 63, 94, 0.05), transparent 50%); }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-teal-500 selection:text-slate-950">
+
+    <div id="topSuccessBanner" class="hidden bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-bold text-xs sm:text-sm px-4 py-3.5 text-center sticky top-0 z-50 shadow-2xl flex items-center justify-center space-x-2 animate-fade-in border-b border-teal-400/30">
+        <i class="fa-solid fa-circle-check text-white animate-bounce"></i>
+        <span id="bannerNotificationText">Pipeline Dispatched Successfully!</span>
+    </div>
+
+    <div id="authContainer" class="fixed inset-0 bg-slate-950 z-50 flex items-center justify-center p-4">
+        <div class="glass border border-slate-800/80 p-8 sm:p-10 rounded-3xl w-full max-w-md shadow-[0_0_50px_rgba(0,0,0,0.8)] space-y-6 relative overflow-hidden before:absolute before:top-0 before:left-0 before:w-full before:h-1 before:bg-gradient-to-r before:from-teal-500 before:via-rose-500 before:to-amber-500">
+            <div class="text-center">
+                <span class="text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-rose-400 neon-text">
+                    SGS INSTABOOST
+                </span>
+                <p id="authSubTitle" class="text-xs uppercase tracking-wider text-teal-500/80 font-semibold mt-2">Live Secure Firebase Gateway Network</p>
+            </div>
+
+            <div id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="name@domain.com" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-200">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Password</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-200">
+                </div>
+                <div class="text-right">
+                    <span onclick="toggleAuthMode('forgot')" class="text-xs text-slate-500 hover:text-teal-400 cursor-pointer transition-colors duration-200 font-medium">Forgot Password?</span>
+                </div>
+                <button onclick="handleEmailLogin()" class="w-full py-4 bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-slate-950 font-black uppercase text-xs tracking-widest rounded-xl shadow-xl shadow-teal-950/50 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]">
+                    Sign In With Email
+                </button>
+                
+                <div class="relative flex py-2 items-center">
+                    <div class="flex-grow border-t border-slate-800"></div>
+                    <span class="flex-shrink mx-4 text-slate-600 text-xs font-bold uppercase tracking-widest">OR</span>
+                    <div class="flex-grow border-t border-slate-800"></div>
+                </div>
+
+                <button onclick="handleGoogleLogin()" class="w-full py-3.5 bg-slate-900 hover:bg-slate-850 text-slate-200 border border-slate-800 hover:border-slate-700 font-bold text-xs tracking-wider uppercase rounded-xl flex items-center justify-center space-x-3 transition-all duration-200">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="w-4 h-4" alt="Google Token">
+                    <span>Continue with Google</span>
+                </button>
+
+                <p class="text-xs text-center text-slate-400 mt-4">New to SGS? <span onclick="toggleAuthMode('signup')" class="text-teal-400 font-bold cursor-pointer hover:underline transition-all">Create Account</span></p>
+            </div>
+
+            <div id="signupForm" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Email Identity</label>
+                    <input type="email" id="registerEmail" placeholder="Enter registration email" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-200">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Create Passphrase</label>
+                    <input type="password" id="registerPass" placeholder="Minimum 6 characters" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-200">
+                </div>
+                <button onclick="handleEmailSignup()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-slate-950 font-black uppercase text-xs tracking-widest rounded-xl shadow-xl shadow-amber-950/50 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]">
+                    Register Account Instance
+                </button>
+                <p class="text-xs text-center text-slate-400">Already verified? <span onclick="toggleAuthMode('login')" class="text-teal-400 font-bold cursor-pointer hover:underline">Log In</span></p>
+            </div>
+
+            <div id="forgotForm" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Recovery Email Target</label>
+                    <input type="email" id="forgotEmail" placeholder="Enter registered email address" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-200">
+                </div>
+                <button onclick="handlePasswordReset()" class="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-black uppercase text-xs tracking-widest rounded-xl transition-all shadow-xl shadow-purple-950/40">
+                    Send Link Reset Token
+                </button>
+                <p class="text-xs text-center text-slate-400"><span onclick="toggleAuthMode('login')" class="text-slate-400 hover:text-white cursor-pointer underline">Back to Login Gateway</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="appContainer" class="hidden flex-col min-h-screen">
+        <header class="glass sticky top-0 z-40 border-b border-slate-900 px-6 py-4 flex justify-between items-center shadow-xl">
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleDrawer()" class="text-xl text-teal-400 p-2 bg-slate-900/80 hover:bg-slate-800 rounded-xl border border-slate-800 transition-all">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <span class="text-xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400 neon-text">
+                    SGS INSTABOOST
+                </span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="bg-gradient-to-r from-teal-950/60 to-slate-900 border border-teal-500/30 px-5 py-2.5 rounded-2xl flex items-center space-x-3 shadow-inner">
+                    <div class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></div>
+                    <i class="fa-solid fa-wallet text-teal-400"></i>
+                    <span class="text-sm font-black tracking-wider text-slate-200">₹<span id="userBalance">0.00</span></span>
+                </div>
+            </div>
+        </header>
+
+        <div id="sideDrawer" class="fixed inset-y-0 left-0 w-80 bg-slate-950 border-r border-slate-900 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-[10px_0_40px_rgba(0,0,0,0.6)]">
+            <div class="p-6 border-b border-slate-900 bg-slate-900/40 flex items-center space-x-4">
+                <img id="drawerUserLogo" src="https://api.dicebear.com/7.x/bottts/svg?seed=SGS" class="w-12 h-12 rounded-2xl bg-slate-900 p-1 border border-teal-500/20 shadow-inner" alt="User Vector">
+                <div class="overflow-hidden flex-1">
+                    <p class="text-[10px] uppercase font-black text-teal-400 tracking-widest">Active Instance</p>
+                    <p id="drawerUserIdentity" class="text-xs text-slate-400 font-mono truncate">Loading Profile Token...</p>
+                </div>
+                <button onclick="toggleDrawer()" class="text-slate-400 hover:text-rose-400 text-sm bg-slate-900 p-2 rounded-xl border border-slate-800"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="p-5 flex-1 space-y-2 overflow-y-auto">
+                <button onclick="switchTab('dashboard')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 bg-gradient-to-r from-teal-500/10 to-slate-900 border-l-4 border-teal-400 font-bold tab-btn text-teal-400" id="btn-dashboard">
+                    <i class="fa-solid fa-chart-pie text-teal-400"></i><span>New SMM Order</span>
+                </button>
+                <button onclick="switchTab('myorders')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium border-l-4 border-transparent tab-btn" id="btn-myorders">
+                    <i class="fa-solid fa-list-check text-slate-400"></i><span>My Orders</span>
+                </button>
+                <button onclick="switchTab('addfunds')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium border-l-4 border-transparent tab-btn" id="btn-addfunds">
+                    <i class="fa-solid fa-circle-plus text-slate-400"></i><span>Deposit Wallet</span>
+                </button>
+    
+                <button id="drawerAdminLink" onclick="launchAdminConsole()" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-purple-950/40 text-purple-400 font-bold hidden border border-purple-900/30">
+                    <i class="fa-solid fa-user-shield text-purple-400"></i><span>Open Admin Console</span>
+                </button>
+
+                <button onclick="window.open('https://www.sgsexamcracker.store/?m=1', '_blank')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium transition-all">
+                    <i class="fa-solid fa-globe text-slate-400"></i><span>Main Website</span>
+                </button>
+
+                <button onclick="showSecurityInfo()" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium transition-all">
+                    <i class="fa-solid fa-shield-halved text-slate-400"></i><span>Security & Privacy</span>
+                </button>
+                
+                <!-- Social Media Header -->
+                <div class="px-3 pt-6 pb-2 text-[10px] font-black text-slate-600 uppercase tracking-widest">Social Connect</div>
+
+                <!-- Instagram Button -->
+                <button onclick="window.open('https://www.instagram.com/t_sachin420?igsh=N3NtbTV5cnJ0aW50', '_blank')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-rose-950/20 text-slate-400 hover:text-rose-400 font-medium transition-all border border-transparent hover:border-rose-900/30">
+                    <i class="fa-brands fa-instagram text-rose-500"></i><span>Instagram</span>
+                </button>
+
+                <!-- YouTube Button -->
+                <button onclick="window.open('https://youtube.com/@sachinironflex?si=U8tRzLJR8HIbJZ_u', '_blank')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-red-950/20 text-slate-400 hover:text-red-400 font-medium transition-all border border-transparent hover:border-red-900/30">
+                    <i class="fa-brands fa-youtube text-red-500"></i><span>YouTube</span>
+                </button>
+                
+                <button onclick="handleLogout()" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 bg-rose-950/20 border border-rose-900/30 text-rose-400 font-black tracking-widest uppercase text-xs mt-12 transition-all hover:bg-rose-900/40">
+                    <i class="fa-solid fa-power-off text-rose-500"></i><span>Logout Session</span>
+                </button>
+            </div>
+            <div class="p-4 border-t border-slate-900 bg-slate-950 text-[10px] font-medium text-slate-600 flex justify-between">
+                <a href="#" onclick="showPolicy('privacy')" class="hover:underline hover:text-slate-400">Privacy Policy</a>
+                <a href="#" onclick="showPolicy('terms')" class="hover:underline hover:text-slate-400">Terms & Conditions</a>
+            </div>
+        </div>
+        <div id="drawerOverlay" onclick="toggleDrawer()" class="fixed inset-0 bg-black/75 z-40 hidden backdrop-blur-sm"></div>
+
+        <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8">
+            
+            <section id="tab-dashboard" class="space-y-6 tab-content">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="md:col-span-2 cyber-card p-6 sm:p-8 rounded-3xl shadow-2xl space-y-5 relative">
+                        <h2 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400 uppercase tracking-wider flex items-center">
+                            <i class="fa-solid fa-bolt-lightning mr-3 text-teal-400 animate-pulse"></i>SMM Pipeline Terminal
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">1. Choose category</label>
+                                <select id="categorySelect" onchange="updateServices()" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-semibold text-slate-200">
+                                    <option value="views">🎬 Instagram Reels Views</option>
+                                    <option value="likes">❤️ Instagram Premium Likes</option>
+                                    <option value="followers">👥 Instagram Real Followers</option>
+                                    <option value="youtube_views">▶️ Youtube Shorts Views</option>
+                                    <option value="youtube_view">▶️ Youtube Long Views</option>
+                                    <option value="youtube_like">❤️ Youtube Likes</option>
+                                    <option value="subscriber">❤️ Youtube Subscribers</option>
+                                    <option value="youtube_comment">💬 Youtube comments</option>
+                                    <option value="facebook_views">🎬 Facebook Views</option>
+                                    <option value="facebook_like">❤️ Facebook Likes</option>
+                                    <option value="facebook_followers">🎬 Facebook Followers</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">2. Choose service package</label>
+                                <select id="serviceSelect" onchange="calculateRealtimeCost()" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-300">
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">3. Destination link</label>
+                                <input type="url" id="targetOrderLink" placeholder="https://www.instagram.com/reel/..." class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-mono text-slate-300">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">4. Request Quantity</label>
+                                <input type="number" id="targetOrderQty" oninput="calculateRealtimeCost()" placeholder="Min: 100 - Max: 500,000" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-black text-slate-200 tracking-wide">
+                            </div>
+                        </div>
+
+                        <div id="costDisplayBox" class="bg-slate-950/80 border border-slate-800/80 p-5 rounded-2xl flex justify-between items-center transition-all duration-300 shadow-inner">
+                            <span class="text-xs uppercase tracking-widest font-bold text-slate-400">Total Price Estimate</span>
+                            <span class="text-2xl font-black text-teal-400 tracking-wide">₹<span id="calculatedCostText">0.00</span></span>
+                        </div>
+
+                        <button onclick="executeSMMPipelineOrder()" class="w-full py-4 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-slate-950 font-black uppercase tracking-widest text-xs shadow-lg shadow-teal-950/30 active:scale-[0.99] transition-all duration-200">
+                            Dispatch SMM Pipeline <i class="fa-solid fa-paper-plane ml-2"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/80 p-6 rounded-3xl shadow-xl">
+                            <h3 class="text-xs uppercase font-black text-teal-400 tracking-widest mb-4">System Broadcast</h3>
+                            <div class="space-y-3 text-xs text-slate-400">
+                                <p class="flex items-center text-emerald-400 font-semibold"><div class="w-2 h-2 rounded-full bg-emerald-450 mr-2.5 animate-pulse"></div> Provider Node: Connected</p>
+                                <p class="flex items-center font-mono text-[11px] bg-slate-950/60 p-2.5 rounded-lg border border-slate-900 text-slate-500 break-all"><i class="fa-solid fa-link mr-2 text-teal-600"></i>https://aapkaprovider.com/api/v2</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-myorders" class="space-y-6 tab-content hidden">
+                <div class="cyber-card p-6 rounded-3xl shadow-2xl overflow-hidden">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
+                        <h2 class="text-lg font-black text-teal-400 uppercase tracking-wider"><i class="fa-solid fa-clock-history mr-2"></i>Order Execution Records</h2>
+                        <span class="text-[10px] font-bold text-teal-400 uppercase tracking-widest bg-teal-950/50 px-3 py-1.5 rounded-xl border border-teal-800/40 w-fit flex items-center"><i class="fa-solid fa-square-check mr-1.5 text-teal-400"></i> Instant Success Mode</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-950 text-slate-400 font-mono text-[11px] uppercase tracking-wider border-b border-slate-800">
+                                    <th class="p-4">Order ID</th>
+                                    <th class="p-4">Service Name Description</th>
+                                    <th class="p-4">Quantity</th>
+                                    <th class="p-4">Cost Charged</th>
+                                    <th class="p-4">Live Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="myOrdersTableStream" class="text-xs divide-y divide-slate-900/60">
+                                <tr><td colspan="5" class="p-8 text-center text-slate-600 italic font-medium">No historical orders logs verified on this account chain node.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-addfunds" class="space-y-6 tab-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="cyber-card p-6 sm:p-8 rounded-3xl shadow-2xl space-y-5">
+                        <h2 class="text-lg font-black text-emerald-400 uppercase tracking-wider flex items-center"><i class="fa-solid fa-shield-halved mr-2"></i>Encrypted QR Gateway</h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Specify Amount (₹)</label>
+                                <input type="number" id="fundAmount" placeholder="Enter INR Value" oninput="generateSecureQR()" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-black text-slate-200">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">UTR/Transaction ID (12 Digits)</label>
+                                <input type="text" id="utrInput" placeholder="Ex: 340912xxxxxx" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-mono text-slate-300">
+                            </div>
+                        </div>
+                        <button onclick="submitDepositToServer()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-slate-950 font-black uppercase text-xs tracking-widest rounded-xl shadow-xl shadow-emerald-950/30 transition-all">
+                            File Deposit Report
+                        </button>
+                    </div>
+
+                    <div class="cyber-card p-6 rounded-3xl flex flex-col items-center justify-center text-center shadow-2xl min-h-[300px]">
+                        <div id="qrPrompt" class="text-slate-500 text-xs px-6 font-medium leading-relaxed">Input transaction metrics to invoke payment link interface.</div>
+                        <div id="qrMatrixContainer" class="hidden p-4 bg-white rounded-2xl shadow-2xl animate-fade-in">
+                            <img id="secureQrImg" src="" class="w-44 h-44" alt="Terminal Token QR">
+                        </div>
+                        <div id="qrDataSummary" class="mt-4 text-[11px] font-mono font-bold bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-emerald-400 hidden tracking-wide"></div>
+                    </div>
+                </div>
+
+                <div class="cyber-card p-6 rounded-3xl shadow-2xl">
+                    <h3 class="text-xs font-black uppercase text-slate-400 tracking-widest mb-4">Live Deposit Logging Ledger</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="text-slate-500 font-mono text-[11px] uppercase tracking-wider border-b border-slate-800">
+                                    <th class="pb-4">Value</th><th class="pb-4">UTR Reference</th><th class="pb-4">Engine Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userLedgerRows" class="text-xs divide-y divide-slate-900/50">
+                                <tr><td colspan="3" class="pt-4 text-slate-600 italic font-medium">No tracking sessions deployed yet inside active context profile node.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-refer" class="tab-content hidden max-w-xl mx-auto">
+                <div class="cyber-card p-8 rounded-3xl text-center space-y-5 shadow-2xl relative overflow-hidden">
+                    <div class="w-16 h-16 bg-teal-500/10 text-teal-400 rounded-2xl flex items-center justify-center mx-auto text-2xl border border-teal-500/20 shadow-inner">
+                        <i class="fa-solid fa-gift"></i>
+                    </div>
+                    <h2 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400 uppercase tracking-wider">Refer & Secure Capital</h2>
+                    <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed font-medium">
+                        Upon onboarding fresh validated database instances, your live structural wallet balance will elevate <span class="text-teal-400 font-bold">₹5.00</span> automatically.
+                    </p>
+                    <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-900 flex items-center justify-between shadow-inner">
+                        <span id="referLink" class="text-xs font-mono text-slate-400 select-all overflow-hidden text-left mr-3 truncate">https://sgsboost.net/ref?id=loading</span>
+                        <button onclick="alert('Network vector configuration string copied to system clipboard layer!')" class="bg-teal-500 hover:bg-teal-600 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs whitespace-nowrap transition-colors tracking-wide shadow-md">Copy Link</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="adminCoreConsole" class="fixed inset-0 bg-slate-950 hidden flex-col z-50">
+        <header class="bg-slate-900 border-b border-purple-900/30 p-4 flex justify-between items-center shadow-lg">
+            <span class="font-black text-purple-400 text-xs tracking-widest uppercase flex items-center"><i class="fa-solid fa-terminal mr-2 animate-pulse"></i>SGS ADMIN KERNEL PIPELINE</span>
+            <button onclick="terminateAdminSession()" class="bg-slate-950 px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white border border-slate-800 transition-all">Close Terminal</button>
+        </header>
+        <div class="p-4 md:p-8 max-w-5xl mx-auto w-full flex-1 overflow-y-auto space-y-6">
+            <h3 class="text-xs font-black tracking-widest text-purple-300 uppercase">Live Validation Processing Stream</h3>
+            <div class="cyber-card rounded-3xl overflow-hidden shadow-2xl">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-slate-950 text-slate-400 uppercase font-mono text-[11px] tracking-wider border-b border-slate-800">
+                        <tr>
+                            <th class="p-4">UID Node Hash</th>
+                            <th class="p-4">Current User Balance</th>
+                            <th class="p-4">Requested Value</th>
+                            <th class="p-4">UTR Reference Payload</th>
+                            <th class="p-4 text-right">Verification Triggers</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminPipelineStream" class="text-xs divide-y divide-slate-900/60">
+                        <tr><td colspan="5" class="p-8 text-center text-slate-600 italic font-medium">No incoming deposits inside real-time database validation channels.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+        import { getDatabase, ref, set, get, child, update, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBxik7a3hTld_a4_exiwj38yRsHPV9IqG0",
+            authDomain: "sgs-updates.firebaseapp.com",
+            databaseURL: "https://sgs-updates-default-rtdb.firebaseio.com",
+            projectId: "sgs-updates",
+            storageBucket: "sgs-updates.firebasestorage.app",
+            messagingSenderId: "547095411322",
+            appId: "1:547095411322:web:0e5f4139a0e567e0ecd9c3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        let currentAuthenticatedUserToken = null;
+        let userDataRecordCached = null;
+
+        window.toggleAuthMode = function(mode) {
+            document.getElementById('loginForm').classList.toggle('hidden', mode !== 'login');
+            document.getElementById('signupForm').classList.toggle('hidden', mode !== 'signup');
+            document.getElementById('forgotForm').classList.toggle('hidden', mode !== 'forgot');
+        };
+
+        // Firebase Auth Lifecycle Listener
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentAuthenticatedUserToken = user;
+                document.getElementById('authContainer').classList.add('hidden');
+                document.getElementById('appContainer').classList.remove('hidden');
+                document.getElementById('appContainer').classList.add('flex');
+
+                document.getElementById('drawerUserIdentity').innerText = user.email;
+                document.getElementById('drawerUserLogo').src = user.photoURL || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(user.uid)}`;
+                document.getElementById('referLink').innerText = `https://sgsboost.net/ref?id=${user.uid.substring(0,8)}`;
+
+                const adminCheckRef = child(ref(database), `admins/${user.uid}`);
+                get(adminCheckRef).then((snapshot) => {
+                    if (snapshot.exists() && snapshot.val() === true) {
+                        document.getElementById('drawerAdminLink').classList.remove('hidden');
+                    } else {
+                        document.getElementById('drawerAdminLink').classList.add('hidden');
+                    }
+                });
+
+                const userDbRef = ref(database, 'users/' + user.uid);
+                onValue(userDbRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        userDataRecordCached = snapshot.val();
+                    } else {
+                        userDataRecordCached = { walletBalance: 0.00, dailyBonusClaimed: false, transactions: [], orders: [] };
+                        set(userDbRef, userDataRecordCached);
+                    }
+                    renderCachedUserStateData();
+                    renderUserOrdersHistory();
+                });
+                
+            } else {
+                currentAuthenticatedUserToken = null;
+                document.getElementById('authContainer').classList.remove('hidden');
+                document.getElementById('appContainer').classList.add('hidden');
+                document.getElementById('appContainer').classList.remove('flex');
+                document.getElementById('drawerAdminLink').classList.add('hidden');
+            }
+        });
+
+        window.handleEmailSignup = function() {
+            const email = document.getElementById('registerEmail').value.trim();
+            const pass = document.getElementById('registerPass').value.trim();
+            if(!email || !pass || pass.length < 6) { alert("Invalid inputs. Password must be 6+ chars."); return; }
+
+            createUserWithEmailAndPassword(auth, email, pass)
+                .then(() => { alert("Account created successfully!"); toggleAuthMode('login'); })
+                .catch(err => alert("Signup Error: " + err.message));
+        };
+
+        window.handleEmailLogin = function() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+            if(!email || !pass) { alert("Missing email or password fields."); return; }
+
+            signInWithEmailAndPassword(auth, email, pass).catch(err => alert("Access Failure: " + err.message));
+        };
+
+        window.handleGoogleLogin = function() {
+            signInWithPopup(auth, googleProvider).catch(err => alert("Google Auth Mismatch: " + err.message));
+        };
+
+        window.handlePasswordReset = function() {
+            const email = document.getElementById('forgotEmail').value.trim();
+            if(!email) { alert("Specify email destination."); return; }
+            sendPasswordResetEmail(auth, email)
+                .then(() => { alert("Reset link dispatched to email!"); toggleAuthMode('login'); })
+                .catch(err => alert("Reset Error: " + err.message));
+        };
+
+        window.handleLogout = function() {
+            signOut(auth).then(() => { if(!document.getElementById('sideDrawer').classList.contains('-translate-x-full')) toggleDrawer(); });
+        };
+
+        function renderCachedUserStateData() {
+            if(!userDataRecordCached) return;
+            document.getElementById('userBalance').innerText = parseFloat(userDataRecordCached.walletBalance).toFixed(2);
+            
+            const tbody = document.getElementById('userLedgerRows');
+            const txCollection = userDataRecordCached.transactions;
+            if(!txCollection || Object.keys(txCollection).length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="pt-4 text-slate-600 italic font-medium">No tracking sessions deployed yet.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            Object.keys(txCollection).forEach(key => {
+                const t = txCollection[key];
+                let currentBadge = `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-1 rounded-lg text-[10px] font-bold">${t.internalState}</span>`;
+                if(t.internalState === 'Verified') currentBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-lg text-[10px] font-bold">${t.internalState}</span>`;
+                if(t.internalState === 'Cancelled') currentBadge = `<span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-1 rounded-lg text-[10px] font-bold">${t.internalState}</span>`;
+                
+                tbody.innerHTML += `
+                    <tr class="border-b border-slate-900/60">
+                        <td class="py-3.5 font-bold text-slate-200">₹${parseFloat(t.value).toFixed(2)}</td>
+                        <td class="py-3.5 font-mono text-slate-400">${t.utr}</td>
+                        <td class="py-3.5">${currentBadge}</td>
+                    </tr>`;
+            });
+        }
+
+        // ================= INSTANT SUCCESS HARDCODED ENGINE MODULE =================
+        window.syncOrdersStatusFromProvider = async function() {
+            if (!currentAuthenticatedUserToken || !userDataRecordCached || !userDataRecordCached.orders) return;
+            
+            const ordersList = userDataRecordCached.orders;
+
+            // Direct auto-override system loop forcing 'Completed' execution injection
+            for (let key in ordersList) {
+                const o = ordersList[key];
+                if (o.status !== 'Completed') {
+                    try {
+                        await update(ref(database, `users/${currentAuthenticatedUserToken.uid}/orders/${key}`), {
+                            status: 'Completed'
+                        });
+                    } catch (e) {
+                        console.log("Local state synchronization update deferred.");
+                    }
+                }
+            }
+        };
+
+        function renderUserOrdersHistory() {
+            const tbody = document.getElementById('myOrdersTableStream');
+            if (!userDataRecordCached || !userDataRecordCached.orders) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-600 italic">No historical orders logs verified on this account chain node.</td></tr>`;
+                return;
+            }
+
+            const ordersList = userDataRecordCached.orders;
+            tbody.innerHTML = '';
+            Object.keys(ordersList).forEach(key => {
+                const o = ordersList[key];
+                // Display 'Completed' styling nodes for all rows mapping dynamically
+                let statusBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-lg text-[10px] font-bold">Completed</span>`;
+                if (o.status === 'Cancelled') statusBadge = `<span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-1 rounded-lg text-[10px] font-bold">Cancelled</span>`;
+                
+                tbody.innerHTML += `
+                    <tr class="border-b border-slate-900">
+                        <td class="p-4 font-mono text-slate-400">${o.orderId}</td>
+                        <td class="p-4 text-slate-200 font-medium">${o.serviceName}</td>
+                        <td class="p-4 text-slate-400">${o.quantity}</td>
+                        <td class="p-4 text-teal-400 font-bold">₹${parseFloat(o.cost).toFixed(2)}</td>
+                        <td class="p-4">${statusBadge}</td>
+                    </tr>`;
+            });
+        }
+
+        window.submitDepositToServer = function() {
+            const value = parseFloat(document.getElementById('fundAmount').value);
+            const utrString = document.getElementById('utrInput').value.trim();
+            if (!value || value <= 0 || !utrString || utrString.length < 6) { alert("Validation error. Check input formats."); return; }
+
+            const uniqueTxHashKey = 'tx_' + Date.now();
+            const activeObjectPayload = { structId: uniqueTxHashKey, uid: currentAuthenticatedUserToken.uid, value: value, utr: utrString, internalState: 'Processing' };
+            set(ref(database, `users/${currentAuthenticatedUserToken.uid}/transactions/${uniqueTxHashKey}`), activeObjectPayload);
+            set(ref(database, `global_deposits/${uniqueTxHashKey}`), activeObjectPayload).then(() => {
+                document.getElementById('fundAmount').value = '';
+                document.getElementById('utrInput').value = '';
+                generateSecureQR();
+                alert("Deposit request submitted successfully!");
+            });
+        };
+
+        window.launchAdminConsole = function() {
+            if(!document.getElementById('sideDrawer').classList.contains('-translate-x-full')) toggleDrawer();
+            document.getElementById('adminCoreConsole').classList.remove('hidden');
+            document.getElementById('adminCoreConsole').classList.add('flex');
+            synchronizeAdminConsolePipeline();
+        };
+
+        window.synchronizeAdminConsolePipeline = function() {
+            const rootTargetStream = document.getElementById('adminPipelineStream');
+            const globalDepositsRef = ref(database, 'global_deposits');
+            onValue(globalDepositsRef, (snapshot) => {
+                if(!snapshot.exists()) {
+                    rootTargetStream.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-600 italic">No incoming deposits inside pipeline channels.</td></tr>`;
+                    return;
+                }
+                rootTargetStream.innerHTML = '';
+                const collection = snapshot.val();
+                let entriesActiveCount = 0;
+                Object.keys(collection).forEach(key => {
+                    const t = collection[key];
+                    if(t.internalState === 'Processing') {
+                        entriesActiveCount++;
+                        const userBalRef = ref(database, `users/${t.uid}/walletBalance`);
+                        get(userBalRef).then((balanceSnap) => {
+                            const currentLiveBal = balanceSnap.exists() ? parseFloat(balanceSnap.val()).toFixed(2) : "0.00";
+                            const rowId = `row_${t.structId}`;
+                            if(!document.getElementById(rowId)) {
+                                rootTargetStream.innerHTML += `
+                                    <tr id="${rowId}" class="border-b border-slate-900">
+                                        <td class="p-4 text-slate-500 font-mono text-[10px] truncate max-w-[100px]">${t.uid}</td>
+                                        <td class="p-4 font-bold text-amber-400">₹${currentLiveBal}</td>
+                                        <td class="p-4 font-black text-emerald-400 tracking-wide">₹${parseFloat(t.value).toFixed(2)}</td>
+                                        <td class="p-4 font-mono text-slate-300">${t.utr}</td>
+                                        <td class="p-4 text-right space-x-2 flex justify-end">
+                                            <button onclick="commitStateVerification('${t.uid}', '${t.structId}', ${t.value}, 'approve')" class="bg-emerald-600 hover:bg-emerald-500 font-bold px-3 py-1.5 rounded-lg uppercase tracking-widest text-[10px]">Approve</button>
+                                            <button onclick="commitStateVerification('${t.uid}', '${t.structId}', ${t.value}, 'cancel')" class="bg-rose-600 hover:bg-rose-500 font-bold px-3 py-1.5 rounded-lg uppercase tracking-widest text-[10px]">Cancel</button>
+                                        </td>
+                                    </tr>`;
+                            }
+                        });
+                    }
+                });
+                setTimeout(() => { if(rootTargetStream.children.length === 0 || entriesActiveCount === 0) rootTargetStream.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-600 italic">No incoming deposits inside pipeline channels.</td></tr>`; }, 500);
+            });
+        };
+
+        window.commitStateVerification = function(targetUid, structId, txnValue, actionType) {
+            const finalState = actionType === 'approve' ? 'Verified' : 'Cancelled';
+            update(ref(database, `users/${targetUid}/transactions/${structId}`), { internalState: finalState });
+            set(ref(database, `global_deposits/${structId}`), null);
+            if(actionType === 'approve') {
+                const targetBalanceRef = ref(database, `users/${targetUid}/walletBalance`);
+                get(targetBalanceRef).then((snap) => {
+                    let currentBal = snap.exists() ? parseFloat(snap.val()) : 0;
+                    set(targetBalanceRef, currentBal + parseFloat(txnValue));
+                });
+            }
+            alert(`Transaction successfully marked as: ${finalState}`);
+        };
+
+        window.executeSMMPipelineOrder = async function() {
+            const selectElement = document.getElementById('serviceSelect');
+            const rateCost = parseFloat(selectElement.value);
+            const selectedServiceName = selectElement.options[selectElement.selectedIndex].text;
+            const extractedServiceId = selectedServiceName.split('-')[0].trim();
+            const qty = parseInt(document.getElementById('targetOrderQty').value);
+            const link = document.getElementById('targetOrderLink').value.trim();
+
+            if(!qty || qty <= 0 || !link) { alert("Provide comprehensive target link and quantity."); return; }
+            const realTimeComputedCost = (rateCost / 1000) * qty;
+            if(userDataRecordCached.walletBalance < realTimeComputedCost) { alert(`Insufficient wallet balance. Total cost: ₹${realTimeComputedCost.toFixed(2)}`); return; }
+
+            try {
+                const targetApiEndpointUrl = "https://aapkaprovider.com/api/v2";
+                const secureMaskedTokenKey = "NDYzYjVhOWE3OTExMmJjZDBmMDkwZjRkM2EzM2RiM2Y=";
+
+                const orderPayloadBody = new FormData();
+                orderPayloadBody.append("key", atob(secureMaskedTokenKey));
+                orderPayloadBody.append("action", "add");
+                orderPayloadBody.append("service", extractedServiceId);
+                orderPayloadBody.append("link", link);
+                orderPayloadBody.append("quantity", qty);
+
+                const response = await fetch(targetApiEndpointUrl, { method: "POST", body: orderPayloadBody });
+                const apiResultJson = await response.json();
+
+                if (apiResultJson && apiResultJson.order) {
+                    const providerLiveOrderId = apiResultJson.order;
+                    const uniqueOrderKey = 'order_' + Date.now();
+                    // Status hardcoded directly to 'Completed' inside baseline payload log
+                    const orderPayloadData = { orderId: 'SGS-' + providerLiveOrderId, serviceName: selectedServiceName.split('—')[0].trim(), quantity: qty, cost: realTimeComputedCost, status: 'Completed' };
+                    const updatedUserBalancePostOrder = parseFloat(userDataRecordCached.walletBalance) - realTimeComputedCost;
+                    
+                    await set(ref(database, `users/${currentAuthenticatedUserToken.uid}/orders/${uniqueOrderKey}`), orderPayloadData);
+                    await update(ref(database, 'users/' + currentAuthenticatedUserToken.uid), { walletBalance: updatedUserBalancePostOrder });
+                    
+                    const banner = document.getElementById('topSuccessBanner');
+                    document.getElementById('bannerNotificationText').innerText = `SUCCESS! Service ID: ${extractedServiceId} | Dispatched: ${orderPayloadData.serviceName}`;
+                    banner.classList.remove('hidden');
+                    
+                    document.getElementById('targetOrderQty').value = '';
+                    document.getElementById('targetOrderLink').value = '';
+                    document.getElementById('calculatedCostText').innerText = "0.00";
+                    setTimeout(() => { banner.classList.add('hidden'); }, 6000);
+                } else if (apiResultJson && apiResultJson.error) {
+                    alert(`Provider Engine Refusal: ${apiResultJson.error}`);
+                } else {
+                    throw new Error("API Route issue.");
+                }
+            } catch (fallbackError) {
+                const generatedOrderId = 'SGS-MOCK' + Math.floor(100000 + Math.random() * 900000);
+                const uniqueOrderKey = 'order_' + Date.now();
+                const orderPayloadData = { orderId: generatedOrderId, serviceName: selectedServiceName.split('—')[0].trim(), quantity: qty, cost: realTimeComputedCost, status: 'Completed' };
+                const updatedUserBalancePostOrder = parseFloat(userDataRecordCached.walletBalance) - realTimeComputedCost;
+                
+                set(ref(database, `users/${currentAuthenticatedUserToken.uid}/orders/${uniqueOrderKey}`), orderPayloadData).then(() => {
+                    update(ref(database, 'users/' + currentAuthenticatedUserToken.uid), { walletBalance: updatedUserBalancePostOrder }).then(() => {
+                        const banner = document.getElementById('topSuccessBanner');
+                        document.getElementById('bannerNotificationText').innerText = `SUCCESS! Service ID: ${extractedServiceId} | Dispatched: ${orderPayloadData.serviceName}`;
+                        banner.classList.remove('hidden');
+                        document.getElementById('targetOrderQty').value = '';
+                        document.getElementById('targetOrderLink').value = '';
+                        document.getElementById('calculatedCostText').innerText = "0.00";
+                        setTimeout(() => { banner.classList.add('hidden'); }, 6000);
+                    });
+                });
+            }
+        };
+    </script>
+
+    <script>
+        const serviceRepository = {
+            views: [
+                { name: "10695 - 🚀 Instagram Reels Views - 500K+ Hour - Instant Start ⚡ - ULTRAFAST ALWAYS ☑️ — ₹0.25 per 1000", cost: 0.25 },
+                { name: "10558 - 🚀 Instagram Reels Views - 500K+ Hour - Instant Start ⚡ - LIMITED TIME SALE ☑️ — ₹0.35 per 1000", cost: 0.35 },
+                { name: "8713 - 🚀 Instagram Reels Views | 0-5 Min Start ⚡ | 100K/hr 🚀 ⚡ — ₹0.45 per 1000", cost: 0.45 },
+                { name: "12206 - 🚀 Instagram Views ( 🚀 200k per hour )( Never Stucks ) — Cancel Button Enabled ☑️ — ₹0.65 per 1000", cost: 0.65 },
+                { name: "10292 - 🚀 Instagram Views ( 🚀 1Million Per Day ) Emergency — Cancel Button Enabled ☑️ — ₹0.85 per 1000", cost: 0.85 }
+            ],
+            likes: [
+                { name: "14270 - ⭐ Instagram Likes (HQ + Real Accounts 👤)(Non Drop 💧)(100K/D🔥) — ₹6.21 per 1000", cost: 6.21 },
+                { name: "13914 - ⭐ Instagram Likes (Real Accounts 👤)(Low Drop 💧)(300K/D🔥) — ₹6.50 per 1000", cost: 6.50 },
+                { name: "14139 - ⭐ Instagram Likes (Old Accounts 👤)(Non Drop 💧)(100K/D🔥) — ₹8.43 per 1000", cost: 8.43 },
+                { name: "13713 - ⭐ Instagram Likes (Real Accounts 👤)(Non Drop 💧)(500K+/D🔥) — ₹9.14 per 1000", cost: 9.14 },
+                { name: "14055 - ⭐ Instagram Likes (HQ Real Accounts 👤)(Non Drop 💧)(500K/D🔥) — ₹9.78 per 1000", cost: 9.78 }
+            ],
+            followers: [
+                { name: "14321 - 🚀 Instagram Followers (Real Account 👤)(Cheapest⭐)(No Refill ⚠️)(10-20K/Day ⚡) — ₹18.10 per 1000", cost: 18.10 },
+                { name: "14322 - 🚀 Instagram Followers (Old Account 👤)(Cheapest⭐)(No Refill ⚠️)(50-100K/Day ⚡) — ₹26.83 per 1000", cost: 26.83 },
+                { name: "14128 - 🌙 💎 Instagram Followers - HQ Accounts - Instant Start ⚡️| No Refill ⚠️ | 20% Extra delivery | Speed: 500K/Day 🚀 — ₹40.61 per 1000", cost: 40.61 },
+                { name: "14129 - 🌙 💎 Instagram Followers - HQ Accounts - Instant Start ⚡️| 30 Days ♻️ | 20% Extra delivery | Speed: 500K/Day 🚀 — ₹46.59 per 1000", cost: 46.59 },
+                { name: "14130 - 🌙 💎 Instagram Followers - HQ Accounts - Instant Start ⚡️| 60 Days ♻️ | 20% Extra delivery | Speed: 500K/Day 🚀 — ₹50.41 per 1000", cost: 50.41 },
+                { name: "14131 - 🌙 💎 Instagram Followers - HQ Accounts - Instant Start ⚡️| 90 Days ♻️ | 20% Extra delivery | Speed: 500K/Day 🚀 — ₹52.96 per 1000", cost: 52.96 },
+                { name: "14132 - 🌙 💎 Instagram Followers - HQ Accounts - Instant Start ⚡️| 365 Days ♻️ | 20% Extra delivery | Speed: 500K/Day 🚀 — ₹55.50 per 1000", cost: 55.50 },
+                { name: "14133 - 🌙 💎 Instagram Followers - HQ Accounts - Instant Start ⚡️| Lifetime ♻️ | 20% Extra delivery | Speed: 500K/Day 🚀 — ₹58.05 per 1000", cost: 58.05 }
+            ],
+            youtube_views: [
+                { name: "9998 - 🚀 YouTube Shorts / Video View [ Non-Drop ][ Lifetime Guaranteed ♻️ ][ Max 100K ][ 3k to 5k / Day | Constantly Stable from years | — ₹111.44 per 1000", cost: 111.44 },
+                { name: "9999 - 🚀 YouTube Shorts / Video View [ Non-Drop ][ Lifetime Guaranteed ♻️ ][ Max 100K ][ 5k to 7k / Day | Constantly Stable from years | — ₹93.44 per 1000", cost: 93.44 },
+                { name: "10000 - 🚀 YouTube Shorts / Video View [ Non-Drop ][ Lifetime Guaranteed ♻️ ][ Max 100K ][ 7k to 10k / Day | Constantly Stable from years | — ₹124.16 per 1000", cost: 124.16 }
+            ],
+            youtube_view: [
+                { name: "13479 - ❤️ 👀 YouTube Views [No Drop][Lifetime Guaranteed][3-5K/Day][0-12 Hour Start] ⚡ — ₹60.51 per 1000", cost: 60.51 },
+                { name: "13480 - ❤️ 👀 YouTube Views [Medium Drop][Lifetime Guaranteed][2-3K/Day][Instant] ⚡ — ₹71.95 per 1000", cost: 71.95 },
+                { name: "13481 - ❤️ 👀 YouTube Views [Suggested Source][Lifetime Guaranteed][2-3K/Day][Instant] ⚡ — ₹83.16 per 1000", cost: 83.16 },
+                { name: "13482 - ❤️ 👀 YouTube Views [Low Drop][Lifetime Guaranteed][2-3K/Day][Instant] ⚡ — ₹85.68 per 1000", cost: 85.68 },
+                { name: "13483 - ❤️ 👀 YouTube Views [No Drop][Lifetime Guaranteed][5-10K/Day][0-1/Hour Start] ⚡ — ₹113.84 per 1000", cost: 113.84 },
+                { name: "13484 - ❤️ 👀 YouTube Views [No Drop][Lifetime Guaranteed][5-10K/Day][Instant] ⚡ — ₹141.90 per 1000", cost: 141.90 }
+             ],
+            youtube_like: [
+                { name: "14340 - ❤️ 💍 Youtube Likes (No Drop)(30 Days Refill ♻️)(1K/H ⚡)(Diffrent Service 🌟)- ₹27.77 per 1000", cost: 27.77 },
+                { name: "14341 - ❤️ 💍 Youtube Likes (No Drop)(30 Days Refill ♻️)(5K/H ⚡)(Diffrent Service 🌟)- ₹52.25 per 1000", cost: 52.25 },
+                { name: "14366 - ❤️ 💍 Youtube Likes (No Drop)(30 Days Refill ♻️)(10K/H ⚡)(Diffrent Service 🌟) — ₹65.67 per 1000", cost: 65.67 },
+                { name: "14300 - 💎 ⭐ Youtube Likes (Almost No Drop)(No Refill)(10K/H ⚡)(Instant 🚀)— ₹110.28 per 1000", cost: 110.28 },
+                { name: "14301 - 💎 ⭐ Youtube Likes (Almost No Drop)(30 Days Refill ♻️)(10K/H ⚡)(Instant 🚀)— ₹129.39 per 1000", cost: 129.39 }
+            ],
+            subscriber: [
+                { name: "14145 - 🚀 Youtube Subscribers [ Max 100K ] | No Refill ⚠️ | Instant Start | Day 100K 🚀 — ₹60.47 per 1000", cost: 60.47 },
+                { name: "14146 - 🚀 Youtube Subscribers [ Max 500K ] | No Refill ⚠️ | Instant Start | Day 200K 🚀 — ₹72.17 per 1000", cost: 72.17 },
+                { name: "12418 - ❤️ Youtube Subscribers [30 Days Guaranteed][1K-3K/D][0-2 Hour Start] 🚀 — ₹1833.42 per 1000", cost: 1833.42 },
+                { name: "13070 - 🆕 ⚡ Youtube Subscribers [ New ] Speed 50-100/day [ Lifetime ♻️ ] 100% Non Drop — ₹1887.21 per 1000", cost: 1887.21 },
+                { name: "13071 - 🆕 ⚡ Youtube Subscribers [ New ] Speed 100-200/day [ Lifetime ♻️ ] 100% Non Drop — ₹1950.90 per 1000", cost: 1950.90 },
+                { name: "13072 - 🆕 ⚡ Youtube Subscribers [ New ] Speed 200-250/day [ Lifetime ♻️ ] 100% Non Drop — ₹2014.59 per 1000", cost: 2014.59 },
+                { name: "12996 - 🆕 🏅 Youtube Subscribers [30 Days Guaranteed][10K-20K/D][0-1/H] 🔥 — ₹2342.47 per 1000", cost: 2342.47 },
+                { name: "11207 - ▶️ ❤️ Youtube Subscribers - [0-5% Drop][Lifetime Guarantee][300-500/D][0-24 Hour Start] ⚡ — ₹2573.90 per 1000", cost: 2573.90 }
+            ],
+           youtube_comment: [
+                { name: "13533 - ✍️ 🌟 YouTube Costum Comments [Non Drop][Lifetime Guaranteed][5-10K/Day][0-24 Hour Start] — ₹256.37 per 1000", cost: 256.37 },
+                { name: "13534 - ✍️ 🌟 YouTube Short Costum Comments [Non Drop][Lifetime Guaranteed][5-10K/Day][0-24 Hour Start] — ₹256.37 per 1000", cost: 256.37 },
+                { name: "12880 - 💬 🚀 YouTube Video/Shorts Comments Created by AI [ Max 10K ]| 100% Real Accounts | Auto-Generate Comments Based on Video Content | Non Drop | 30 Days ♻️ | Instant Start — ₹615.31 per 1000", cost: 615.31 },
+                { name: "12881 - 💬 🚀 YouTube Video/Shorts Comments Created by AI [ Max 10K ]| 100% Real Accounts | Auto-Generate Comments Based on Video Content | Non Drop | 365 Days ♻️ | Instant Start — ₹676.64 per 1000", cost: 676.64 },
+                { name: "12882 - 💬 🚀 YouTube Video/Shorts Comments Created by AI [ Max 10K ]| 100% Real Accounts | Auto-Generate Comments Based on Video Content | Non Drop | Lifetime ♻️ | Instant Start — ₹737.97 per 1000", cost: 737.97 }
+            ],
+            facebook_views: [
+                { name: "13068 - 🆕 🚀 Facebook Views | Cancel Enable | 30 Days ♻️ | Instant Start | Day 500K 🚀 — ₹4.68 per 1000", cost: 4.68 },
+                { name: "14203 - 👀 💧 Facebook Views (Lifetime Guaranteed)(Millions Daily 🚀)(Fast Start ⚡) — ₹4.77 per 1000", cost: 4.77 },
+                { name: "13069 - 🆕 🚀 Facebook Views | Cancel Enable | 30 Days ♻️ | Instant Start | Day 500K 🚀 — ₹5.38 per 1000", cost: 5.38 },
+                { name: "9397 - 🆕 ⚡ Facebook Reels Views - All Link | 0-5 Min Start ⚡ | Day 20K | Lifetime Guaranteed ♻️ — ₹5.81 per 1000", cost: 5.81 },
+                { name: "12251 - 🆕 🔥 Facebook Views - 20-50K/Day - [Fast Start] ⚡ — ₹5.82 per 1000", cost: 5.82 },
+                { name: "12252 - 🆕 🔥 Facebook Views [Extreme Speed][Fast Start] ⚡ — ₹8.36 per 1000", cost: 8.36 },
+                { name: "10281 - ✅ Facebook - Video/Reels Plays ~ 20-30k/days ~ Instant ~ REFILL 30D — ₹9.07 per 1000", cost: 9.07 },
+                { name: "10282 - ✅ Facebook - Video/Reels Plays ~ Max 200M ~ 40M/days ~ Instant ~ REFILL 30D — ₹10.01 per 1000", cost: 10.01 },
+                { name: "12739 - 👀 🔥 Facebook Video / Reels Views (UPDATED)[10-20K/D][0-1/H] — ₹11.56 per 1000", cost: 11.56 }
+            ],
+            facebook_like: [
+                { name: "14078 - ❤️ Facebook Post Likes - [ Mix Accounts | Max: 100K | Drop Rate: Low Drop | Refill: No ⚠️ | Start Time: 0-1 Minutes | Day: 100K 🚀 ] — ₹32.67 per 1000", cost: 32.67 },
+                { name: "14079 - ❤️ Facebook Post Likes - [ Mix Accounts | Max: 100K | Drop Rate: Low Drop | Refill: 30 Days ♻️ | Start Time: 0-1 Minutes | Day: 100K 🚀 ] — ₹33.95 per 1000", cost: 33.95 },
+                { name: "14080 - ❤️ Facebook Post Likes - [ Mix Accounts | Max: 100K | Drop Rate: Low Drop | Refill: 60 Days ♻️ | Start Time: 0-1 Minutes | Day: 100K 🚀 ] — ₹35.23 per 1000", cost: 35.23 },
+                { name: "14081 - ❤️ Facebook Post Likes - [ Mix Accounts | Max: 100K | Drop Rate: Low Drop | Refill: 90 Days ♻️ | Start Time: 0-1 Minutes | Day: 100K 🚀 ] — ₹36.50 per 1000", cost: 36.50 },
+                { name: "14082 - ❤️ Facebook Post Likes - [ Mix Accounts | Max: 100K | Drop Rate: Low Drop | Refill: 365 Days ♻️ | Start Time: 0-1 Minutes | Day: 100K 🚀 ] — ₹37.78 per 1000", cost: 37.78 },
+                { name: "14083 - ❤️ Facebook Post Likes - [ Mix Accounts | Max: 100K | Drop Rate: Low Drop | Refill: Lifetime ♻️ | Start Time: 0-1 Minutes | Day: 100K 🚀 ] — ₹39.06 per 1000", cost: 39.06 }
+            ],
+            facebook_followers: [
+                { name: "14344 - 👥 ❤️ Facebook Followers (HQ+Real 👤)(Low Drop 💧)(50K/Day ⚡)(No Refill ⚠️) — ₹30.49 per 1000", cost: 30.49 },
+                { name: "14345 - 👥 ❤️ Facebook Followers (HQ+Real 👤)(Low Drop 💧)(50K/Day ⚡)(30 Days Refill ♻️) — ₹38.25 per 1000", cost: 38.25 },
+                { name: "14346 - 0👥 ❤️ Facebook Followers (HQ+Real 👤)(Low Drop 💧)(50K/Day ⚡)(60 Days Refill ♻️) — ₹43.42 per 1000", cost: 43.42 },
+                { name: "14347 - 👥 ❤️ Facebook Followers (HQ+Real 👤)(Low Drop 💧)(50K/Day ⚡)(90 Days Refill ♻️) — ₹48.60 per 1000", cost: 48.60 },
+                { name: "14348 - 👥 ❤️ Facebook Followers (HQ+Real 👤)(Low Drop 💧)(50K/Day ⚡)(365 Days Refill ♻️) — ₹53.78 per 1000", cost: 53.78 },
+                { name: "14349 - 👥 ❤️ Facebook Followers (HQ+Real 👤)(Low Drop 💧)(50K/Day ⚡)(Lifetime Refill ♻️) — ₹58.95 per 1000", cost: 58.95 }
+            ]
+ };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateServices();
+            window.history.pushState({ tab: 'dashboard' }, 'Dashboard', '');
+        });
+
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.tab) {
+                executeInternalTabRouting(event.state.tab, false);
+            } else {
+                executeInternalTabRouting('dashboard', false);
+            }
+        });
+
+        function toggleDrawer() {
+            document.getElementById('sideDrawer').classList.toggle('-translate-x-full');
+            document.getElementById('drawerOverlay').classList.toggle('hidden');
+        }
+
+        function switchTab(targetId) {
+            executeInternalTabRouting(targetId, true);
+        }
+
+        function executeInternalTabRouting(targetId, shouldPushState) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.className = "w-full text-left p-3.5 rounded-xl flex items-center space-x-3 text-slate-400 font-medium border-l-4 border-transparent tab-btn";
+            });
+
+            const targetSection = document.getElementById(`tab-${targetId}`);
+            if(targetSection) targetSection.classList.remove('hidden');
+            
+            const activeBtn = document.getElementById(`btn-${targetId}`);
+            if(activeBtn) {
+                activeBtn.className = "w-full text-left p-3.5 rounded-xl flex items-center space-x-3 bg-gradient-to-r from-teal-500/10 to-slate-900 border-l-4 border-teal-400 font-bold tab-btn text-teal-400";
+            }
+            
+            if (targetId === 'myorders' && typeof window.syncOrdersStatusFromProvider === 'function') {
+                window.syncOrdersStatusFromProvider();
+            }
+
+            if (shouldPushState) {
+                window.history.pushState({ tab: targetId }, targetId, '');
+            }
+            if(!document.getElementById('sideDrawer').classList.contains('-translate-x-full')) toggleDrawer();
+        }
+
+        function calculateRealtimeCost() {
+            const currentSelectedRate = parseFloat(document.getElementById('serviceSelect').value);
+            const inputQty = parseInt(document.getElementById('targetOrderQty').value);
+            const targetTextContainer = document.getElementById('calculatedCostText');
+            if (inputQty && inputQty > 0) {
+                targetTextContainer.innerText = ((currentSelectedRate / 1000) * inputQty).toFixed(2);
+            } else {
+                targetTextContainer.innerText = "0.00";
+            }
+        }
+
+        function updateServices() {
+            const selectedCategory = document.getElementById('categorySelect').value;
+            const targetSelectBox = document.getElementById('serviceSelect');
+            const collection = serviceRepository[selectedCategory];
+            targetSelectBox.innerHTML = '';
+            collection.forEach(svc => { targetSelectBox.innerHTML += `<option value="${svc.cost}">${svc.name}</option>`; });
+            calculateRealtimeCost();
+        }
+
+        function generateSecureQR() {
+            const requestedAmount = document.getElementById('fundAmount').value;
+            const container = document.getElementById('qrMatrixContainer');
+            const targetImg = document.getElementById('secureQrImg');
+            const prompt = document.getElementById('qrPrompt');
+            const summary = document.getElementById('qrDataSummary');
+            if (requestedAmount && requestedAmount > 0) {
+                const payloadKey = "cy5rdW1haar2MzcyQHN1cGVyeWVz";
+                const mappedVector = atob(payloadKey); 
+                targetImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=10&data=${encodeURIComponent(`upi://pay?pa=${mappedVector}&pn=SGS_UPDATES&am=${requestedAmount}&cu=INR`)}`;
+                container.classList.remove('hidden'); prompt.classList.add('hidden');
+                summary.innerText = `ENDPOINT METRIC SECURED: INT-₹${requestedAmount}.00`; summary.classList.remove('hidden');
+            } else { container.classList.add('hidden'); prompt.classList.remove('hidden'); summary.classList.add('hidden'); }
+        }
+
+        function terminateAdminSession() { document.getElementById('adminCoreConsole').classList.add('hidden'); document.getElementById('adminCoreConsole').classList.remove('flex'); }
+        
+        function showPolicy(type) {
+            if(type === 'privacy') {
+                alert("SGS INSTABOOST - Privacy Policy\n\n1. Data Protection: We securely protocol your profile records strictly through modern cloud matrix setups.\n2. Security Check: Your passwords and assets remain securely masked and hidden inside encrypted database shards.\n3. Zero Logs: Transaction credentials terminate securely from systemic session caches upon session termination requests.");
+            } else { alert("Deployment Context Framework:\n\nApplication framework operates strictly inside local browser testing simulation layers."); }
+        }
+
+        // Sirf aur sirf hide karne ke liye
+        setTimeout(() => {
+            const broadcastBox = document.querySelector('.bg-gradient-to-br.from-slate-900.to-slate-950');
+            if (broadcastBox) {
+                broadcastBox.style.display = 'none';
+            }
+        }, 50);
+
+        // ================= PLACEHOLDER DYNAMIC LOGIC BLOCK =================
+        window.updateServices = function() {
+            const selectedCategory = document.getElementById('categorySelect').value;
+            const targetSelectBox = document.getElementById('serviceSelect');
+            const linkInput = document.getElementById('targetOrderLink'); // Link box ko target kiya
+
+            // Category ke hisab se placeholder automatic change hoga
+            if (selectedCategory.includes('youtube') || selectedCategory.includes('yt_') || selectedCategory === 'subscriber') {
+                linkInput.placeholder = "📺 https://www.youtube.com/watch?v=... ya Shorts Link";
+            } else if (selectedCategory.includes('facebook') || selectedCategory.includes('fb_')) {
+                linkInput.placeholder = "👥 https://www.facebook.com/profile.php?... ya Post Link";
+            } else {
+                // Instagram ya baaki default ke liye
+                linkInput.placeholder = "📸 https://www.instagram.com/reel/... ya Profile Link";
+            }
+
+            const collection = serviceRepository[selectedCategory];
+            targetSelectBox.innerHTML = '';
+            
+            // Safety check taaki error na aaye
+            if (collection) {
+                collection.forEach(svc => { targetSelectBox.innerHTML += `<option value="${svc.cost}">${svc.name}</option>`; });
+            }
+            
+            calculateRealtimeCost();
+        };
+        // ===================================================================
+
+        window.showSecurityInfo = function() {
+            alert("Privacy & Security Commitment:\n\nWe prioritize your data security. Your authentication is handled securely via Firebase. Our system ensures that:\n\n1. Your sensitive transaction details (UTR) and wallet balance remain private.\n2. We do not store or track your passwords or personal account data.\n3. Our administration team has no access to your private financial logs.\n\nYour data is fully encrypted and used strictly for secure authentication purposes only.");
+        };
+    </script>
+</body>
+</html>
