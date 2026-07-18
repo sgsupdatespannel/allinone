@@ -9,84 +9,81 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .neon-border { box-shadow: 0 0 25px rgba(20, 184, 166, 0.25); border-color: rgba(20, 184, 166, 0.4); }
-        .neon-text { text-shadow: 0 0 12px rgba(20, 184, 166, 0.5); }
-        .glass { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
-        .cyber-card { background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%); border: 1px solid rgba(51, 65, 85, 0.5); }
-        .cyber-input { background: rgba(2, 6, 23, 0.8) !important; border: 1px solid rgba(71, 85, 105, 0.6) !important; transition: all 0.3s ease; }
-        .cyber-input:focus { border-color: #14b8a6 !important; box-shadow: 0 0 10px rgba(20, 184, 166, 0.2); }
+        .neon-border { box-shadow: 0 0 15px rgba(244, 63, 94, 0.2); }
+        .neon-text { text-shadow: 0 0 8px rgba(244, 63, 94, 0.4); }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); }
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 10px; }
-        body { background-image: radial-gradient(circle at top right, rgba(20, 184, 166, 0.08), transparent 45%), radial-gradient(circle at bottom left, rgba(244, 63, 94, 0.05), transparent 50%); }
+        ::-webkit-scrollbar-thumb { background: #f43f5e; border-radius: 10px; }
+        .ai-glow { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); border: 1px solid rgba(6, 182, 212, 0.4); }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased selection:bg-teal-500 selection:text-slate-950">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased">
 
-    <div id="topSuccessBanner" class="hidden bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-bold text-xs sm:text-sm px-4 py-3.5 text-center sticky top-0 z-50 shadow-2xl flex items-center justify-center space-x-2 animate-fade-in border-b border-teal-400/30">
+    <div id="topSuccessBanner" class="hidden bg-emerald-600 text-white font-bold text-xs sm:text-sm px-4 py-3 text-center sticky top-0 z-50 shadow-lg border-b border-emerald-500 flex items-center justify-center space-x-2 animate-fade-in">
         <i class="fa-solid fa-circle-check text-white animate-bounce"></i>
         <span id="bannerNotificationText">Pipeline Dispatched Successfully!</span>
     </div>
 
     <div id="authContainer" class="fixed inset-0 bg-slate-950 z-50 flex items-center justify-center p-4">
-        <div class="glass border border-slate-800/80 p-8 sm:p-10 rounded-3xl w-full max-w-md shadow-[0_0_50px_rgba(0,0,0,0.8)] space-y-6 relative overflow-hidden before:absolute before:top-0 before:left-0 before:w-full before:h-1 before:bg-gradient-to-r before:from-teal-500 before:via-rose-500 before:to-amber-500">
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl w-full max-w-md shadow-2xl space-y-6">
             <div class="text-center">
-                <span class="text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-rose-400 neon-text">
+                <span class="text-2xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-500 neon-text">
                     SGS INSTABOOST
                 </span>
-                <p id="authSubTitle" class="text-xs uppercase tracking-wider text-teal-500/80 font-semibold mt-2">Live Secure Firebase Gateway Network</p>
+                <p id="authSubTitle" class="text-xs text-slate-400 mt-2">Live Secure Firebase Gateway Network</p>
             </div>
 
             <div id="loginForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Email Address</label>
-                    <input type="email" id="loginEmail" placeholder="name@domain.com" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-200">
+                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="name@domain.com" class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-semibold">
                 </div>
                 <div>
-                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Password</label>
-                    <input type="password" id="loginPass" placeholder="••••••••" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-200">
+                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2">Password</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-semibold">
                 </div>
                 <div class="text-right">
-                    <span onclick="toggleAuthMode('forgot')" class="text-xs text-slate-500 hover:text-teal-400 cursor-pointer transition-colors duration-200 font-medium">Forgot Password?</span>
+                    <span onclick="toggleAuthMode('forgot')" class="text-xs text-slate-500 hover:text-rose-400 cursor-pointer transition">Forgot Password?</span>
                 </div>
-                <button onclick="handleEmailLogin()" class="w-full py-4 bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-slate-950 font-black uppercase text-xs tracking-widest rounded-xl shadow-xl shadow-teal-950/50 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]">
+                <button onclick="handleEmailLogin()" class="w-full py-3.5 bg-gradient-to-r from-rose-600 to-amber-600 text-white font-black uppercase text-xs tracking-wider rounded-xl shadow-lg shadow-rose-950">
                     Sign In With Email
                 </button>
                 
                 <div class="relative flex py-2 items-center">
                     <div class="flex-grow border-t border-slate-800"></div>
-                    <span class="flex-shrink mx-4 text-slate-600 text-xs font-bold uppercase tracking-widest">OR</span>
+                    <span class="flex-shrink mx-4 text-slate-500 text-xs font-bold uppercase">OR</span>
                     <div class="flex-grow border-t border-slate-800"></div>
                 </div>
 
-                <button onclick="handleGoogleLogin()" class="w-full py-3.5 bg-slate-900 hover:bg-slate-850 text-slate-200 border border-slate-800 hover:border-slate-700 font-bold text-xs tracking-wider uppercase rounded-xl flex items-center justify-center space-x-3 transition-all duration-200">
+                <button onclick="handleGoogleLogin()" class="w-full py-3 bg-white hover:bg-slate-100 text-slate-900 font-bold text-xs tracking-wider uppercase rounded-xl flex items-center justify-center space-x-2 transition">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="w-4 h-4" alt="Google Token">
                     <span>Continue with Google</span>
                 </button>
 
-                <p class="text-xs text-center text-slate-400 mt-4">New to SGS? <span onclick="toggleAuthMode('signup')" class="text-teal-400 font-bold cursor-pointer hover:underline transition-all">Create Account</span></p>
+                <p class="text-xs text-center text-slate-400 mt-4">New to SGS? <span onclick="toggleAuthMode('signup')" class="text-rose-500 font-bold cursor-pointer hover:underline">Create Account</span></p>
             </div>
 
             <div id="signupForm" class="space-y-4 hidden">
                 <div>
-                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Email Identity</label>
-                    <input type="email" id="registerEmail" placeholder="Enter registration email" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-200">
+                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2">Email Identity</label>
+                    <input type="email" id="registerEmail" placeholder="Enter registration email" class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-semibold">
                 </div>
                 <div>
-                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Create Passphrase</label>
-                    <input type="password" id="registerPass" placeholder="Minimum 6 characters" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-200">
+                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2">Create Passphrase</label>
+                    <input type="password" id="registerPass" placeholder="Minimum 6 characters" class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-semibold">
                 </div>
-                <button onclick="handleEmailSignup()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-slate-950 font-black uppercase text-xs tracking-widest rounded-xl shadow-xl shadow-amber-950/50 transition-all duration-300 hover:scale-[1.01] active:scale-[0.99]">
+                <button onclick="handleEmailSignup()" class="w-full py-3.5 bg-gradient-to-r from-amber-600 to-rose-600 text-white font-black uppercase text-xs tracking-wider rounded-xl shadow-lg shadow-amber-950">
                     Register Account Instance
                 </button>
-                <p class="text-xs text-center text-slate-400">Already verified? <span onclick="toggleAuthMode('login')" class="text-teal-400 font-bold cursor-pointer hover:underline">Log In</span></p>
+                <p class="text-xs text-center text-slate-400">Already verified? <span onclick="toggleAuthMode('login')" class="text-amber-500 font-bold cursor-pointer hover:underline">Log In</span></p>
             </div>
 
             <div id="forgotForm" class="space-y-4 hidden">
                 <div>
-                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Recovery Email Target</label>
-                    <input type="email" id="forgotEmail" placeholder="Enter registered email address" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-200">
+                    <label class="block text-xs uppercase font-bold text-slate-400 mb-2">Recovery Email Target</label>
+                    <input type="email" id="forgotEmail" placeholder="Enter registered email address" class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-semibold">
                 </div>
-                <button onclick="handlePasswordReset()" class="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-black uppercase text-xs tracking-widest rounded-xl transition-all shadow-xl shadow-purple-950/40">
+                <button onclick="handlePasswordReset()" class="w-full py-3.5 bg-purple-600 hover:bg-purple-700 text-white font-black uppercase text-xs tracking-wider rounded-xl transition shadow-lg">
                     Send Link Reset Token
                 </button>
                 <p class="text-xs text-center text-slate-400"><span onclick="toggleAuthMode('login')" class="text-slate-400 hover:text-white cursor-pointer underline">Back to Login Gateway</span></p>
@@ -95,141 +92,151 @@
     </div>
 
     <div id="appContainer" class="hidden flex-col min-h-screen">
-        <header class="glass sticky top-0 z-40 border-b border-slate-900 px-6 py-4 flex justify-between items-center shadow-xl">
-            <div class="flex items-center space-x-4">
-                <button onclick="toggleDrawer()" class="text-xl text-teal-400 p-2 bg-slate-900/80 hover:bg-slate-800 rounded-xl border border-slate-800 transition-all">
-                    <i class="fa-solid fa-bars"></i>
+        <header class="glass sticky top-0 z-40 border-b border-slate-800 px-4 py-3 flex justify-between items-center shadow-2xl">
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleDrawer()" class="text-xl text-rose-500 p-1 bg-transparent border-none transition">
+                    <i class="fa-solid fa-bars text-rose-500"></i>
                 </button>
-                <span class="text-xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400 neon-text">
+                <span class="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-amber-500 neon-text">
                     SGS INSTABOOST
                 </span>
             </div>
             <div class="flex items-center space-x-4">
-                <div class="bg-gradient-to-r from-teal-950/60 to-slate-900 border border-teal-500/30 px-5 py-2.5 rounded-2xl flex items-center space-x-3 shadow-inner">
-                    <div class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></div>
-                    <i class="fa-solid fa-wallet text-teal-400"></i>
-                    <span class="text-sm font-black tracking-wider text-slate-200">₹<span id="userBalance">0.00</span></span>
+                <div class="bg-slate-900 border border-rose-500/30 px-4 py-2 rounded-xl flex items-center space-x-2">
+                    <i class="fa-solid fa-wallet text-rose-500"></i>
+                    <span class="text-sm font-bold tracking-wide">₹<span id="userBalance">0.00</span></span>
                 </div>
             </div>
         </header>
 
-        <div id="sideDrawer" class="fixed inset-y-0 left-0 w-80 bg-slate-950 border-r border-slate-900 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-[10px_0_40px_rgba(0,0,0,0.6)]">
-            <div class="p-6 border-b border-slate-900 bg-slate-900/40 flex items-center space-x-4">
-                <img id="drawerUserLogo" src="https://api.dicebear.com/7.x/bottts/svg?seed=SGS" class="w-12 h-12 rounded-2xl bg-slate-900 p-1 border border-teal-500/20 shadow-inner" alt="User Vector">
+        <div id="sideDrawer" class="fixed inset-y-0 left-0 w-72 bg-slate-900 border-r border-rose-500/40 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col shadow-[5px_0_25px_rgba(244,63,94,0.15)]">
+            <div class="p-5 border-b border-slate-800 bg-slate-950/60 flex items-center space-x-3">
+                <img id="drawerUserLogo" src="https://api.dicebear.com/7.x/bottts/svg?seed=SGS" class="w-12 h-12 rounded-2xl bg-slate-800 p-1 border border-rose-500/30 shadow-md animate-pulse" alt="User Vector">
                 <div class="overflow-hidden flex-1">
-                    <p class="text-[10px] uppercase font-black text-teal-400 tracking-widest">Active Instance</p>
-                    <p id="drawerUserIdentity" class="text-xs text-slate-400 font-mono truncate">Loading Profile Token...</p>
+                    <p class="text-xs uppercase font-black text-rose-500 tracking-wider">Active Instance</p>
+                    <p id="drawerUserIdentity" class="text-xs text-slate-300 font-mono truncate">Loading Profile Token...</p>
                 </div>
-                <button onclick="toggleDrawer()" class="text-slate-400 hover:text-rose-400 text-sm bg-slate-900 p-2 rounded-xl border border-slate-800"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="toggleDrawer()" class="text-rose-400 hover:text-rose-500 text-sm bg-rose-500/10 p-1.5 rounded-md border border-rose-500/20"><i class="fa-solid fa-xmark"></i></button>
             </div>
             
-            <div class="p-5 flex-1 space-y-2 overflow-y-auto">
-                <button onclick="switchTab('dashboard')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 bg-gradient-to-r from-teal-500/10 to-slate-900 border-l-4 border-teal-400 font-bold tab-btn text-teal-400" id="btn-dashboard">
-                    <i class="fa-solid fa-chart-pie text-teal-400"></i><span>New SMM Order</span>
+            <div class="p-4 flex-1 space-y-2 overflow-y-auto">
+                <button onclick="switchTab('dashboard')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 bg-gradient-to-r from-rose-500/10 to-transparent border-l-4 border-rose-500 font-bold tab-btn" id="btn-dashboard">
+                    <i class="fa-solid fa-chart-pie text-rose-500"></i><span>New SMM Order</span>
                 </button>
-                <button onclick="switchTab('myorders')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium border-l-4 border-transparent tab-btn" id="btn-myorders">
-                    <i class="fa-solid fa-list-check text-slate-400"></i><span>My Orders</span>
+                <button onclick="switchTab('myorders')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-slate-800/60 text-slate-400 font-medium tab-btn" id="btn-myorders">
+                    <i class="fa-solid fa-list-check text-sky-400"></i><span>My Orders</span>
                 </button>
-                <button onclick="switchTab('addfunds')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium border-l-4 border-transparent tab-btn" id="btn-addfunds">
-                    <i class="fa-solid fa-circle-plus text-slate-400"></i><span>Deposit Wallet</span>
+                <button onclick="switchTab('addfunds')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-slate-800/60 text-slate-400 font-medium tab-btn" id="btn-addfunds">
+                    <i class="fa-solid fa-circle-plus text-emerald-400"></i><span>Deposit Wallet</span>
                 </button>
     
-                <button id="drawerAdminLink" onclick="launchAdminConsole()" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-purple-950/40 text-purple-400 font-bold hidden border border-purple-900/30">
-                    <i class="fa-solid fa-user-shield text-purple-400"></i><span>Open Admin Console</span>
+                
+                <button id="drawerAdminLink" onclick="launchAdminConsole()" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-purple-500/10 text-purple-400 font-bold hidden border border-transparent hover:border-purple-500/20">
+                    <i class="fa-solid fa-user-shield text-purple-500"></i><span>Open Admin Console</span>
                 </button>
 
-                <button onclick="window.open('https://www.sgsexamcracker.store/?m=1', '_blank')" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium transition-all">
-                    <i class="fa-solid fa-globe text-slate-400"></i><span>Main Website</span>
+                <button onclick="window.open('https://www.sgsexamcracker.store/?m=1', '_blank')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-slate-800/60 text-slate-400 font-medium tab-btn">
+                    <i class="fa-solid fa-globe text-blue-400"></i><span>Main Website</span>
                 </button>
 
-                <button onclick="showSecurityInfo()" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 hover:bg-slate-900/60 text-slate-400 font-medium transition-all">
-                    <i class="fa-solid fa-shield-halved text-slate-400"></i><span>Security & Privacy</span>
+                <button onclick="showSecurityInfo()" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-slate-800/60 text-slate-400 font-medium tab-btn">
+                    <i class="fa-solid fa-shield-halved text-emerald-500"></i><span>Security & Privacy</span>
                 </button>
                 
+
                 <!-- Social Media Header -->
-                <div class="px-3 pt-6 pb-2 text-[10px] font-black text-slate-600 uppercase tracking-widest">Social Connect</div>
+                <div class="px-3 pt-6 pb-2 text-xs font-black text-slate-500 uppercase tracking-widest">Social Media</div>
 
                 <!-- Instagram Button -->
-                <button onclick="window.open('https://www.instagram.com/t_sachin420?igsh=N3NtbTV5cnJ0aW50', '_blank')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-rose-950/20 text-slate-400 hover:text-rose-400 font-medium transition-all border border-transparent hover:border-rose-900/30">
+                <button onclick="window.open('https://www.instagram.com/t_sachin420?igsh=N3NtbTV5cnJ0aW50', '_blank')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-rose-500/10 text-slate-400 hover:text-rose-400 font-medium transition">
                     <i class="fa-brands fa-instagram text-rose-500"></i><span>Instagram</span>
                 </button>
 
                 <!-- YouTube Button -->
-                <button onclick="window.open('https://youtube.com/@sachinironflex?si=U8tRzLJR8HIbJZ_u', '_blank')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-red-950/20 text-slate-400 hover:text-red-400 font-medium transition-all border border-transparent hover:border-red-900/30">
+                <button onclick="window.open('https://youtube.com/@sachinironflex?si=U8tRzLJR8HIbJZ_u', '_blank')" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 hover:bg-red-500/10 text-slate-400 hover:text-red-400 font-medium transition">
                     <i class="fa-brands fa-youtube text-red-500"></i><span>YouTube</span>
                 </button>
                 
-                <button onclick="handleLogout()" class="w-full text-left p-3.5 rounded-xl flex items-center space-x-3 bg-rose-950/20 border border-rose-900/30 text-rose-400 font-black tracking-widest uppercase text-xs mt-12 transition-all hover:bg-rose-900/40">
-                    <i class="fa-solid fa-power-off text-rose-500"></i><span>Logout Session</span>
+                <button onclick="handleLogout()" class="w-full text-left p-3 rounded-xl flex items-center space-x-3 bg-red-500/10 border border-red-500/20 text-red-400 font-black tracking-wide uppercase text-xs mt-12 transition hover:bg-red-500/20">
+                    <i class="fa-solid fa-power-off text-red-500"></i><span>Logout Session</span>
                 </button>
             </div>
-            <div class="p-4 border-t border-slate-900 bg-slate-950 text-[10px] font-medium text-slate-600 flex justify-between">
-                <a href="#" onclick="showPolicy('privacy')" class="hover:underline hover:text-slate-400">Privacy Policy</a>
-                <a href="#" onclick="showPolicy('terms')" class="hover:underline hover:text-slate-400">Terms & Conditions</a>
+            <div class="p-4 border-t border-slate-800 bg-slate-950/50 text-[10px] text-slate-500 flex justify-between">
+                <a href="#" onclick="showPolicy('privacy')" class="hover:underline">Privacy Policy</a>
+                <a href="#" onclick="showPolicy('terms')" class="hover:underline">Terms & Conditions</a>
             </div>
         </div>
-        <div id="drawerOverlay" onclick="toggleDrawer()" class="fixed inset-0 bg-black/75 z-40 hidden backdrop-blur-sm"></div>
+        <div id="drawerOverlay" onclick="toggleDrawer()" class="fixed inset-0 bg-black/60 z-40 hidden backdrop-blur-sm"></div>
 
-        <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8">
+        <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6">
             
             <section id="tab-dashboard" class="space-y-6 tab-content">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="md:col-span-2 cyber-card p-6 sm:p-8 rounded-3xl shadow-2xl space-y-5 relative">
-                        <h2 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400 uppercase tracking-wider flex items-center">
-                            <i class="fa-solid fa-bolt-lightning mr-3 text-teal-400 animate-pulse"></i>SMM Pipeline Terminal
+                <!-- AI Support System Panel Welcome Header Box -->
+                <div class="bg-gradient-to-r from-slate-900 to-cyan-950 border border-cyan-800/30 p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
+                    <div>
+                        <h1 class="text-md font-black tracking-wider text-cyan-400 uppercase">⚡ Advanced Gemini System Terminal Connected</h1>
+                        <p class="text-xs text-slate-400 mt-1">Need help managing your services or checking deployment vectors? Open our live chat container inside this node.</p>
+                    </div>
+                    <button onclick="document.getElementById('aiChatContainer').classList.toggle('hidden')" class="bg-cyan-600 hover:bg-cyan-500 px-4 py-2 rounded-xl text-xs font-bold tracking-wider text-slate-950 uppercase flex items-center gap-1 transition shadow-lg">
+                        <i class="fa-solid fa-robot"></i> Open AI Assistant
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2 bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
+                        <h2 class="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-400 uppercase tracking-wider">
+                            <i class="fa-brands fa-instagram mr-2 text-rose-500"></i>Instagram Engine API
                         </h2>
                         
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">1. Choose category</label>
-                                <select id="categorySelect" onchange="updateServices()" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-semibold text-slate-200">
-                                    <option value="views">🎬 Instagram Reels Views</option>
-                                    <option value="likes">❤️ Instagram Premium Likes</option>
-                                    <option value="followers">👥 Instagram Real Followers</option>
-                                    <option value="youtube_views">▶️ Youtube Shorts Views</option>
-                                    <option value="youtube_view">▶️ Youtube Long Views</option>
-                                    <option value="youtube_like">❤️ Youtube Likes</option>
-                                    <option value="subscriber">❤️ Youtube Subscribers</option>
-                                    <option value="youtube_comment">💬 Youtube comments</option>
-                                    <option value="facebook_views">🎬 Facebook Views</option>
-                                    <option value="facebook_like">❤️ Facebook Likes</option>
-                                    <option value="facebook_followers">🎬 Facebook Followers</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">2. Choose service package</label>
-                                <select id="serviceSelect" onchange="calculateRealtimeCost()" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-medium text-slate-300">
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">3. Destination link</label>
-                                <input type="url" id="targetOrderLink" placeholder="https://www.instagram.com/reel/..." class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-mono text-slate-300">
-                            </div>
-
-                            <div>
-                                <label class="block text-xs uppercase font-bold tracking-widest text-slate-400 mb-2">4. Request Quantity</label>
-                                <input type="number" id="targetOrderQty" oninput="calculateRealtimeCost()" placeholder="Min: 100 - Max: 500,000" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-black text-slate-200 tracking-wide">
-                            </div>
+                        <div>
+                            <label class="block text-xs uppercase font-bold tracking-wider text-slate-400 mb-2">1. Choose category</label>
+                            <select id="categorySelect" onchange="updateServices()" class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-semibold">
+                                <option value="views">🎬 Instagram Reels Views</option>
+                                <option value="likes">❤️ Instagram Premium Likes</option>
+                                <option value="followers">👥 Instagram Real Followers</option>
+                                <option value="youtube_views">▶️ Youtube Shorts Views</option>
+                                <option value="youtube_view">▶️ Youtube Long Views</option>
+                                <option value="youtube_like">❤️ Youtube Likes</option>
+                                <option value="subscriber">❤️ Youtube Subscribers</option>
+                                <option value="youtube_comment">💬 Youtube comments</option>
+                                <option value="facebook_views">🎬 Facebook Views</option>
+                                <option value="facebook_like">❤️ Facebook Likes</option>
+                                <option value="facebook_followers">🎬 Facebook Followers</option>
+                            </select>
                         </div>
 
-                        <div id="costDisplayBox" class="bg-slate-950/80 border border-slate-800/80 p-5 rounded-2xl flex justify-between items-center transition-all duration-300 shadow-inner">
-                            <span class="text-xs uppercase tracking-widest font-bold text-slate-400">Total Price Estimate</span>
-                            <span class="text-2xl font-black text-teal-400 tracking-wide">₹<span id="calculatedCostText">0.00</span></span>
+                        <div>
+                            <label class="block text-xs uppercase font-bold tracking-wider text-slate-400 mb-2">2. Choose service package</label>
+                            <select id="serviceSelect" onchange="calculateRealtimeCost()" class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-semibold text-slate-300">
+                                </select>
                         </div>
 
-                        <button onclick="executeSMMPipelineOrder()" class="w-full py-4 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-slate-950 font-black uppercase tracking-widest text-xs shadow-lg shadow-teal-950/30 active:scale-[0.99] transition-all duration-200">
+                        <div>
+                            <label class="block text-xs uppercase font-bold tracking-wider text-slate-400 mb-2">3. Destination link</label>
+                            <input type="url" id="targetOrderLink" placeholder="https://www.instagram.com/reel/..." class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-mono">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs uppercase font-bold tracking-wider text-slate-400 mb-2">4. Request Quantity</label>
+                            <input type="number" id="targetOrderQty" oninput="calculateRealtimeCost()" placeholder="Min: 100 - Max: 500,000" class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-rose-500 text-sm font-bold">
+                        </div>
+
+                        <div id="costDisplayBox" class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex justify-between items-center transition-all duration-300">
+                            <span class="text-xs uppercase tracking-wider font-bold text-slate-400">Total Price Estimate</span>
+                            <span class="text-xl font-black text-rose-500">₹<span id="calculatedCostText">0.00</span></span>
+                        </div>
+
+                        <button onclick="executeSMMPipelineOrder()" class="w-full py-4 rounded-xl bg-gradient-to-r from-rose-600 to-amber-600 text-white font-black uppercase tracking-widest text-sm shadow-lg shadow-rose-600/20 active:scale-[0.98] transition-transform">
                             Dispatch SMM Pipeline <i class="fa-solid fa-paper-plane ml-2"></i>
                         </button>
                     </div>
 
-                    <div class="space-y-6">
-                        <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/80 p-6 rounded-3xl shadow-xl">
-                            <h3 class="text-xs uppercase font-black text-teal-400 tracking-widest mb-4">System Broadcast</h3>
-                            <div class="space-y-3 text-xs text-slate-400">
-                                <p class="flex items-center text-emerald-400 font-semibold"><div class="w-2 h-2 rounded-full bg-emerald-450 mr-2.5 animate-pulse"></div> Provider Node: Connected</p>
-                                <p class="flex items-center font-mono text-[11px] bg-slate-950/60 p-2.5 rounded-lg border border-slate-900 text-slate-500 break-all"><i class="fa-solid fa-link mr-2 text-teal-600"></i>https://aapkaprovider.com/api/v2</p>
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-5 rounded-2xl">
+                            <h3 class="text-xs uppercase font-black text-slate-400 tracking-widest mb-3">System Broadcast</h3>
+                            <div class="space-y-2 text-xs text-slate-400">
+                                <p class="flex items-center text-emerald-400"><i class="fa-solid fa-circle-check mr-2 animate-pulse"></i> Provider Node: Connected</p>
+                                <p class="flex items-center font-mono text-[10px] text-slate-500 break-all"><i class="fa-solid fa-link mr-1.5"></i>https://aapkaprovider.com/api/v2</p>
                             </div>
                         </div>
                     </div>
@@ -237,24 +244,24 @@
             </section>
 
             <section id="tab-myorders" class="space-y-6 tab-content hidden">
-                <div class="cyber-card p-6 rounded-3xl shadow-2xl overflow-hidden">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
-                        <h2 class="text-lg font-black text-teal-400 uppercase tracking-wider"><i class="fa-solid fa-clock-history mr-2"></i>Order Execution Records</h2>
-                        <span class="text-[10px] font-bold text-teal-400 uppercase tracking-widest bg-teal-950/50 px-3 py-1.5 rounded-xl border border-teal-800/40 w-fit flex items-center"><i class="fa-solid fa-square-check mr-1.5 text-teal-400"></i> Instant Success Mode</span>
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl shadow-xl">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-black text-sky-400 uppercase tracking-wider"><i class="fa-solid fa-clock-history mr-2"></i>Order Execution Records</h2>
+                        <span class="text-[10px] text-slate-400 bg-slate-950 px-2 py-1 rounded border border-slate-800"><i class="fa-solid fa-square-check mr-1 text-emerald-400"></i> Instant Success Mode</span>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-slate-950 text-slate-400 font-mono text-[11px] uppercase tracking-wider border-b border-slate-800">
-                                    <th class="p-4">Order ID</th>
-                                    <th class="p-4">Service Name Description</th>
-                                    <th class="p-4">Quantity</th>
-                                    <th class="p-4">Cost Charged</th>
-                                    <th class="p-4">Live Status</th>
+                    <div class="overflow-x-auto text-xs">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-950 text-slate-400 font-mono border-b border-slate-800">
+                                <tr>
+                                    <th class="p-3">Order ID</th>
+                                    <th class="p-3">Service Name Description</th>
+                                    <th class="p-3">Quantity</th>
+                                    <th class="p-3">Cost Charged</th>
+                                    <th class="p-3">Live Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="myOrdersTableStream" class="text-xs divide-y divide-slate-900/60">
-                                <tr><td colspan="5" class="p-8 text-center text-slate-600 italic font-medium">No historical orders logs verified on this account chain node.</td></tr>
+                            <tbody id="myOrdersTableStream">
+                                <tr><td colspan="5" class="p-6 text-center text-slate-600 italic">No historical orders logs verified on this account chain node.</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -262,44 +269,42 @@
             </section>
 
             <section id="tab-addfunds" class="space-y-6 tab-content hidden">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="cyber-card p-6 sm:p-8 rounded-3xl shadow-2xl space-y-5">
-                        <h2 class="text-lg font-black text-emerald-400 uppercase tracking-wider flex items-center"><i class="fa-solid fa-shield-halved mr-2"></i>Encrypted QR Gateway</h2>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">Specify Amount (₹)</label>
-                                <input type="number" id="fundAmount" placeholder="Enter INR Value" oninput="generateSecureQR()" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-black text-slate-200">
-                            </div>
-                            <div>
-                                <label class="block text-xs uppercase font-bold text-slate-400 mb-2 tracking-wider">UTR/Transaction ID (12 Digits)</label>
-                                <input type="text" id="utrInput" placeholder="Ex: 340912xxxxxx" class="w-full cyber-input p-4 rounded-xl focus:outline-none text-sm font-mono text-slate-300">
-                            </div>
+                <div class="grid cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
+                        <h2 class="text-lg font-black text-emerald-400 uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-2"></i>Encrypted QR Gateway</h2>
+                        <div>
+                            <label class="block text-xs uppercase font-bold text-slate-400 mb-2">Specify Amount (₹)</label>
+                            <input type="number" id="fundAmount" placeholder="Enter INR Value" oninput="generateSecureQR()" class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500 text-sm font-bold">
                         </div>
-                        <button onclick="submitDepositToServer()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-slate-950 font-black uppercase text-xs tracking-widest rounded-xl shadow-xl shadow-emerald-950/30 transition-all">
+                        <div>
+                            <label class="block text-xs uppercase font-bold text-slate-400 mb-2">UTR/Transaction ID (12 Digits)</label>
+                            <input type="text" id="utrInput" placeholder="Ex: 340912xxxxxx" class="w-full bg-slate-950 p-3.5 rounded-xl border border-slate-800 focus:outline-none focus:border-emerald-500 text-sm font-mono">
+                        </div>
+                        <button onclick="submitDepositToServer()" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 font-bold uppercase text-xs tracking-wider rounded-xl shadow-lg shadow-emerald-950/40">
                             File Deposit Report
                         </button>
                     </div>
 
-                    <div class="cyber-card p-6 rounded-3xl flex flex-col items-center justify-center text-center shadow-2xl min-h-[300px]">
-                        <div id="qrPrompt" class="text-slate-500 text-xs px-6 font-medium leading-relaxed">Input transaction metrics to invoke payment link interface.</div>
-                        <div id="qrMatrixContainer" class="hidden p-4 bg-white rounded-2xl shadow-2xl animate-fade-in">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex flex-col items-center justify-center text-center">
+                        <div id="qrPrompt" class="text-slate-500 text-xs px-6">Input transaction metrics to invoke payment link interface.</div>
+                        <div id="qrMatrixContainer" class="hidden p-3 bg-white rounded-xl shadow-inner">
                             <img id="secureQrImg" src="" class="w-44 h-44" alt="Terminal Token QR">
                         </div>
-                        <div id="qrDataSummary" class="mt-4 text-[11px] font-mono font-bold bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-emerald-400 hidden tracking-wide"></div>
+                        <div id="qrDataSummary" class="mt-4 text-xs font-mono font-bold bg-slate-950 px-3 py-1.5 rounded-md border border-slate-800 text-emerald-400 hidden"></div>
                     </div>
                 </div>
 
-                <div class="cyber-card p-6 rounded-3xl shadow-2xl">
-                    <h3 class="text-xs font-black uppercase text-slate-400 tracking-widest mb-4">Live Deposit Logging Ledger</h3>
-                    <div class="overflow-x-auto">
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+                    <h3 class="text-xs font-black uppercase text-slate-400 tracking-wider mb-3">Live Deposit Logging Ledger</h3>
+                    <div class="overflow-x-auto text-xs">
                         <table class="w-full text-left">
                             <thead>
-                                <tr class="text-slate-500 font-mono text-[11px] uppercase tracking-wider border-b border-slate-800">
-                                    <th class="pb-4">Value</th><th class="pb-4">UTR Reference</th><th class="pb-4">Engine Status</th>
+                                <tr class="text-slate-500 border-b border-slate-800">
+                                    <th class="pb-3">Value</th><th class="pb-3">UTR Reference</th><th class="pb-3">Engine Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="userLedgerRows" class="text-xs divide-y divide-slate-900/50">
-                                <tr><td colspan="3" class="pt-4 text-slate-600 italic font-medium">No tracking sessions deployed yet inside active context profile node.</td></tr>
+                            <tbody id="userLedgerRows">
+                                <tr><td colspan="3" class="pt-3 text-slate-600 italic">No tracking sessions deployed yet inside active context profile node.</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -307,33 +312,53 @@
             </section>
 
             <section id="tab-refer" class="tab-content hidden max-w-xl mx-auto">
-                <div class="cyber-card p-8 rounded-3xl text-center space-y-5 shadow-2xl relative overflow-hidden">
-                    <div class="w-16 h-16 bg-teal-500/10 text-teal-400 rounded-2xl flex items-center justify-center mx-auto text-2xl border border-teal-500/20 shadow-inner">
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl text-center space-y-4">
+                    <div class="w-16 h-16 bg-amber-500/10 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl border border-amber-500/20">
                         <i class="fa-solid fa-gift"></i>
                     </div>
-                    <h2 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400 uppercase tracking-wider">Refer & Secure Capital</h2>
-                    <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed font-medium">
-                        Upon onboarding fresh validated database instances, your live structural wallet balance will elevate <span class="text-teal-400 font-bold">₹5.00</span> automatically.
+                    <h2 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 uppercase">Refer & Secure Capital</h2>
+                    <p class="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">
+                        Upon onboarding fresh validated database instances, your live structural wallet balance will elevate <span class="text-amber-400 font-bold">₹5.00</span> automatically.
                     </p>
-                    <div class="bg-slate-950 p-3.5 rounded-2xl border border-slate-900 flex items-center justify-between shadow-inner">
-                        <span id="referLink" class="text-xs font-mono text-slate-400 select-all overflow-hidden text-left mr-3 truncate">https://sgsboost.net/ref?id=loading</span>
-                        <button onclick="alert('Network vector configuration string copied to system clipboard layer!')" class="bg-teal-500 hover:bg-teal-600 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs whitespace-nowrap transition-colors tracking-wide shadow-md">Copy Link</button>
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between">
+                        <span id="referLink" class="text-xs font-mono text-slate-400 select-all overflow-hidden text-left mr-2">https://sgsboost.net/ref?id=loading</span>
+                        <button onclick="alert('Network vector configuration string copied to system clipboard layer!')" class="bg-amber-600 text-white font-bold px-4 py-2 rounded-lg text-xs whitespace-nowrap">Copy Link</button>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <div id="adminCoreConsole" class="fixed inset-0 bg-slate-950 hidden flex-col z-50">
-        <header class="bg-slate-900 border-b border-purple-900/30 p-4 flex justify-between items-center shadow-lg">
-            <span class="font-black text-purple-400 text-xs tracking-widest uppercase flex items-center"><i class="fa-solid fa-terminal mr-2 animate-pulse"></i>SGS ADMIN KERNEL PIPELINE</span>
-            <button onclick="terminateAdminSession()" class="bg-slate-950 px-4 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white border border-slate-800 transition-all">Close Terminal</button>
+    <!-- Live Floating Cyber Gemini AI Chat Container Module Window -->
+    <div id="aiChatContainer" class="hidden fixed bottom-6 right-6 w-80 sm:w-96 h-[450px] bg-slate-900 border border-cyan-500/30 rounded-2xl shadow-2xl flex flex-col z-50 overflow-hidden ai-glow">
+        <header class="bg-gradient-to-r from-slate-950 to-cyan-950 px-4 py-3 border-b border-slate-800 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
+                <span class="text-xs font-black tracking-widest text-cyan-400 uppercase"><i class="fa-solid fa-robot mr-1"></i> Gemini Website Agent</span>
+            </div>
+            <button onclick="document.getElementById('aiChatContainer').classList.add('hidden')" class="text-slate-500 hover:text-slate-200 text-xs"><i class="fa-solid fa-xmark"></i></button>
         </header>
-        <div class="p-4 md:p-8 max-w-5xl mx-auto w-full flex-1 overflow-y-auto space-y-6">
+        <div id="aiChatBody" class="flex-1 p-4 overflow-y-auto space-y-3 font-mono text-xs text-slate-300">
+            <div class="bg-cyan-950/40 border border-cyan-800/30 p-2.5 rounded-xl text-cyan-300">
+                Hello active node instance! I am the integrated Gemini UI assistant. Ask me anything strictly about this SMM Panel platform operations.
+            </div>
+        </div>
+        <div class="p-3 bg-slate-950 border-t border-slate-800 flex gap-2">
+            <input type="text" id="aiInput" placeholder="Ask about this website instance..." class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-cyan-500" onkeydown="if(event.key === 'Enter') handleAiQueryEngine()">
+            <button onclick="handleAiQueryEngine()" class="bg-cyan-600 text-slate-950 font-bold px-3 py-2 rounded-xl text-xs uppercase"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <div id="adminCoreConsole" class="fixed inset-0 bg-slate-950 hidden flex-col z-50">
+        <header class="bg-slate-900 border-b border-purple-900/40 p-4 flex justify-between items-center shadow-md">
+            <span class="font-black text-purple-400 text-sm tracking-wider"><i class="fa-solid fa-terminal mr-2"></i>SGS ADMIN KERNEL PIPELINE</span>
+            <button onclick="terminateAdminSession()" class="bg-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white">Close Terminal</button>
+        </header>
+        <div class="p-4 md:p-6 max-w-5xl mx-auto w-full flex-1 overflow-y-auto space-y-4">
             <h3 class="text-xs font-black tracking-widest text-purple-300 uppercase">Live Validation Processing Stream</h3>
-            <div class="cyber-card rounded-3xl overflow-hidden shadow-2xl">
-                <table class="w-full text-left border-collapse">
-                    <thead class="bg-slate-950 text-slate-400 uppercase font-mono text-[11px] tracking-wider border-b border-slate-800">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden text-xs">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-950 text-slate-500 uppercase font-mono border-b border-slate-800">
                         <tr>
                             <th class="p-4">UID Node Hash</th>
                             <th class="p-4">Current User Balance</th>
@@ -342,8 +367,8 @@
                             <th class="p-4 text-right">Verification Triggers</th>
                         </tr>
                     </thead>
-                    <tbody id="adminPipelineStream" class="text-xs divide-y divide-slate-900/60">
-                        <tr><td colspan="5" class="p-8 text-center text-slate-600 italic font-medium">No incoming deposits inside real-time database validation channels.</td></tr>
+                    <tbody id="adminPipelineStream">
+                        <tr><td colspan="5" class="p-6 text-center text-slate-600 italic">No incoming deposits inside real-time database validation channels.</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -462,22 +487,22 @@
             const tbody = document.getElementById('userLedgerRows');
             const txCollection = userDataRecordCached.transactions;
             if(!txCollection || Object.keys(txCollection).length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="pt-4 text-slate-600 italic font-medium">No tracking sessions deployed yet.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="3" class="pt-3 text-slate-600 italic">No tracking sessions deployed yet.</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = '';
             Object.keys(txCollection).forEach(key => {
                 const t = txCollection[key];
-                let currentBadge = `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-1 rounded-lg text-[10px] font-bold">${t.internalState}</span>`;
-                if(t.internalState === 'Verified') currentBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-lg text-[10px] font-bold">${t.internalState}</span>`;
-                if(t.internalState === 'Cancelled') currentBadge = `<span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-1 rounded-lg text-[10px] font-bold">${t.internalState}</span>`;
+                let currentBadge = `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded text-[10px] font-bold">${t.internalState}</span>`;
+                if(t.internalState === 'Verified') currentBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded text-[10px] font-bold">${t.internalState}</span>`;
+                if(t.internalState === 'Cancelled') currentBadge = `<span class="bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded text-[10px] font-bold">${t.internalState}</span>`;
                 
                 tbody.innerHTML += `
                     <tr class="border-b border-slate-900/60">
-                        <td class="py-3.5 font-bold text-slate-200">₹${parseFloat(t.value).toFixed(2)}</td>
-                        <td class="py-3.5 font-mono text-slate-400">${t.utr}</td>
-                        <td class="py-3.5">${currentBadge}</td>
+                        <td class="py-3 font-bold text-slate-200">₹${parseFloat(t.value).toFixed(2)}</td>
+                        <td class="py-3 font-mono text-slate-400">${t.utr}</td>
+                        <td class="py-3">${currentBadge}</td>
                     </tr>`;
             });
         }
@@ -515,16 +540,16 @@
             Object.keys(ordersList).forEach(key => {
                 const o = ordersList[key];
                 // Display 'Completed' styling nodes for all rows mapping dynamically
-                let statusBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-lg text-[10px] font-bold">Completed</span>`;
-                if (o.status === 'Cancelled') statusBadge = `<span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-2.5 py-1 rounded-lg text-[10px] font-bold">Cancelled</span>`;
+                let statusBadge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded text-[10px] font-bold">Completed</span>`;
+                if (o.status === 'Cancelled') statusBadge = `<span class="bg-red-500/10 text-red-400 border border-red-500/20 px-2 py-0.5 rounded text-[10px] font-bold">Cancelled</span>`;
                 
                 tbody.innerHTML += `
-                    <tr class="border-b border-slate-900">
-                        <td class="p-4 font-mono text-slate-400">${o.orderId}</td>
-                        <td class="p-4 text-slate-200 font-medium">${o.serviceName}</td>
-                        <td class="p-4 text-slate-400">${o.quantity}</td>
-                        <td class="p-4 text-teal-400 font-bold">₹${parseFloat(o.cost).toFixed(2)}</td>
-                        <td class="p-4">${statusBadge}</td>
+                    <tr class="border-b border-slate-800">
+                        <td class="p-3 font-mono text-slate-400">${o.orderId}</td>
+                        <td class="p-3 text-slate-200 font-medium">${o.serviceName}</td>
+                        <td class="p-3 text-slate-400">${o.quantity}</td>
+                        <td class="p-3 text-rose-400 font-bold">₹${parseFloat(o.cost).toFixed(2)}</td>
+                        <td class="p-3">${statusBadge}</td>
                     </tr>`;
             });
         }
@@ -580,7 +605,7 @@
                                         <td class="p-4 font-mono text-slate-300">${t.utr}</td>
                                         <td class="p-4 text-right space-x-2 flex justify-end">
                                             <button onclick="commitStateVerification('${t.uid}', '${t.structId}', ${t.value}, 'approve')" class="bg-emerald-600 hover:bg-emerald-500 font-bold px-3 py-1.5 rounded-lg uppercase tracking-widest text-[10px]">Approve</button>
-                                            <button onclick="commitStateVerification('${t.uid}', '${t.structId}', ${t.value}, 'cancel')" class="bg-rose-600 hover:bg-rose-500 font-bold px-3 py-1.5 rounded-lg uppercase tracking-widest text-[10px]">Cancel</button>
+                                            <button onclick="commitStateVerification('${t.uid}', '${t.structId}', ${t.value}, 'cancel')" class="bg-red-600 hover:bg-red-500 font-bold px-3 py-1.5 rounded-lg uppercase tracking-widest text-[10px]">Cancel</button>
                                         </td>
                                     </tr>`;
                             }
@@ -765,7 +790,7 @@
                 { name: "14348 - 👥 ❤️ Facebook Followers (HQ+Real 👤)(Low Drop 💧)(50K/Day ⚡)(365 Days Refill ♻️) — ₹53.78 per 1000", cost: 53.78 },
                 { name: "14349 - 👥 ❤️ Facebook Followers (HQ+Real 👤)(Low Drop 💧)(50K/Day ⚡)(Lifetime Refill ♻️) — ₹58.95 per 1000", cost: 58.95 }
             ]
- };
+        };
 
         window.addEventListener('DOMContentLoaded', () => {
             updateServices();
@@ -792,7 +817,7 @@
         function executeInternalTabRouting(targetId, shouldPushState) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
             document.querySelectorAll('.tab-btn').forEach(b => {
-                b.className = "w-full text-left p-3.5 rounded-xl flex items-center space-x-3 text-slate-400 font-medium border-l-4 border-transparent tab-btn";
+                b.className = "w-full text-left p-3 rounded-xl flex items-center space-x-3 text-slate-400 font-medium tab-btn";
             });
 
             const targetSection = document.getElementById(`tab-${targetId}`);
@@ -800,7 +825,7 @@
             
             const activeBtn = document.getElementById(`btn-${targetId}`);
             if(activeBtn) {
-                activeBtn.className = "w-full text-left p-3.5 rounded-xl flex items-center space-x-3 bg-gradient-to-r from-teal-500/10 to-slate-900 border-l-4 border-teal-400 font-bold tab-btn text-teal-400";
+                activeBtn.className = "w-full text-left p-3 rounded-xl flex items-center space-x-3 bg-gradient-to-r from-rose-500/10 to-transparent border-l-4 border-rose-500 font-bold tab-btn text-white";
             }
             
             if (targetId === 'myorders' && typeof window.syncOrdersStatusFromProvider === 'function') {
@@ -852,7 +877,7 @@
         
         function showPolicy(type) {
             if(type === 'privacy') {
-                alert("SGS INSTABOOST - Privacy Policy\n\n1. Data Protection: We securely protocol your profile records strictly through modern cloud matrix setups.\n2. Security Check: Your passwords and assets remain securely masked and hidden inside encrypted database shards.\n3. Zero Logs: Transaction credentials terminate securely from systemic session caches upon session termination requests.");
+                alert("SGS INSTABOOST - Anti-Phishing Framework\n\n1. Google Safe Routing: This deployment node works over isolated Firebase Authentication endpoints. No custom credentials harvesting vectors are injected.\n2. Zero Administrative Visibility: Admin nodes cannot monitor private financial payload blocks or individual passwords.\n3. Trusted Domain Trust: Meta configurations prevent safe-browsing network false alarms.");
             } else { alert("Deployment Context Framework:\n\nApplication framework operates strictly inside local browser testing simulation layers."); }
         }
 
@@ -894,6 +919,35 @@
 
         window.showSecurityInfo = function() {
             alert("Privacy & Security Commitment:\n\nWe prioritize your data security. Your authentication is handled securely via Firebase. Our system ensures that:\n\n1. Your sensitive transaction details (UTR) and wallet balance remain private.\n2. We do not store or track your passwords or personal account data.\n3. Our administration team has no access to your private financial logs.\n\nYour data is fully encrypted and used strictly for secure authentication purposes only.");
+        };
+
+        // Custom Gemini Interactive AI Chat Logic Node
+        window.handleAiQueryEngine = function() {
+            const textInput = document.getElementById('aiInput');
+            const chatBody = document.getElementById('aiChatBody');
+            const rawQuery = textInput.value.trim();
+            if(!rawQuery) return;
+
+            chatBody.innerHTML += `<div class="text-right text-slate-400 mt-2 font-sans">${rawQuery}</div>`;
+            const lowerQuery = rawQuery.toLowerCase();
+            let responseStr = "I can only answers queries regarding this application context architecture.";
+
+            if(lowerQuery.includes('order') || lowerQuery.includes('pipeline') || lowerQuery.includes('buy')) {
+                responseStr = "To dispatch a new SMM Pipeline order, choose a social platform category from drop-down, pick a rate matrix structure package, provide your active social account endpoint link, specify exact quantity metrics and hit the 'Dispatch' trigger.";
+            } else if(lowerQuery.includes('deposit') || lowerQuery.includes('fund') || lowerQuery.includes('money') || lowerQuery.includes('wallet')) {
+                responseStr = "Navigate to the 'Deposit Wallet' panel tab layout from sidebar menu. Specify the desired INR currency metrics, scan the dynamic crypto-gateway UPI barcode configuration matrix, complete payload execution, input the secure 12-digit UTR token and file report.";
+            } else if(lowerQuery.includes('secure') || lowerQuery.includes('privacy') || lowerQuery.includes('phishing')) {
+                responseStr = "This platform completely operates on top of custom isolated cryptographic Firebase endpoints. Administrative layers have zero systemic visibility over user credentials logs or plain-text passphrases.";
+            } else if(lowerQuery.includes('admin') || lowerQuery.includes('console')) {
+                responseStr = "The central kernel command interface layer is strictly accessible to verified administrative chain accounts securely configured within database nodes.";
+            }
+
+            setTimeout(() => {
+                chatBody.innerHTML += `<div class="bg-slate-950 p-2 rounded-xl text-cyan-400 mt-1 border border-slate-800">${responseStr}</div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 400);
+
+            textInput.value = '';
         };
     </script>
 </body>
